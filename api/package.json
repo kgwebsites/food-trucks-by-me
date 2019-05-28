@@ -1,0 +1,41 @@
+{
+  "name": "food-trucks-by-me-api",
+  "version": "1.0.0",
+  "description": "Find food trucks via this api with an address and a block range",
+  "main": "lib/index.js",
+  "babel": {
+    "presets": [
+      "es2015"
+    ]
+  },
+  "eslintConfig": {
+    "extends": "airbnb/base"
+  },
+  "scripts": {
+    "lint": "eslint src/**",
+    "start": "node src/"
+  },
+  "engines": {
+    "node": ">=6.1.0",
+    "npm": ">=3.8.6"
+  },
+  "repository": {
+    "type": "git"
+  },
+  "publishConfig": {
+    "registry": "https://registry.npmjs.org"
+  },
+  "author": "Kyle Goss",
+  "license": "MIT",
+  "dependencies": {
+    "cors": "^2.8.5",
+    "dotenv": "^8.0.0",
+    "express": "^4.17.1",
+    "node-fetch": "^2.6.0"
+  },
+  "devDependencies": {
+    "eslint": "^3.19.0",
+    "eslint-config-airbnb": "^14.1.0",
+    "eslint-plugin-import": "^2.7.0"
+  }
+}
