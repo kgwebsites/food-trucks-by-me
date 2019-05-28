@@ -8,25 +8,24 @@ import {
 import { TruckContext } from '../../contexts/TruckContext';
 
 function FoodMap() {
-  const {
-    trucks,
-    geolocation: { lng, lat },
-    loaded,
-  } = useContext(TruckContext);
+  const { trucks, geolocation, loaded } = useContext(TruckContext);
 
   if (!loaded) return null;
 
   return (
-    <GoogleMap defaultZoom={15} defaultCenter={{ lat, lng }}>
-      {trucks.map(truck => (
-        <Marker
-          key={`${truck.permit}-${truck.cnn}-${truck.locationid}`}
-          position={{
-            lat: parseFloat(truck.latitude),
-            lng: parseFloat(truck.longitude),
-          }}
-        />
-      ))}
+    <GoogleMap defaultZoom={16} defaultCenter={geolocation}>
+      <>
+        <Marker position={geolocation} label="You are here" />
+        {trucks.map(truck => (
+          <Marker
+            key={`${truck.permit}-${truck.cnn}-${truck.locationid}`}
+            position={{
+              lat: parseFloat(truck.latitude),
+              lng: parseFloat(truck.longitude),
+            }}
+          />
+        ))}
+      </>
     </GoogleMap>
   );
 }
