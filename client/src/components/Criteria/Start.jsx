@@ -2,10 +2,10 @@ import React, { useContext } from 'react';
 import Input from '../Input/Input';
 import { TruckContext } from '../../contexts/TruckContext';
 
-function Start() {
+function Start({ className }) {
   const { start24, setStart24 } = useContext(TruckContext);
   return (
-    <div>
+    <div className={className}>
       <Input
         label="Open after"
         type="text"

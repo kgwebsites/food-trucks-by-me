@@ -19,5 +19,8 @@
   "homepage": "https://github.com/kgwebsites/food-trucks-by-me#readme",
   "devDependencies": {
     "concurrently": "^4.1.0"
+  },
+  "dependencies": {
+    "styled-components": "^4.2.0"
   }
 }

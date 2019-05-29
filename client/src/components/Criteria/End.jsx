@@ -2,10 +2,10 @@ import React, { useContext } from 'react';
 import Input from '../Input/Input';
 import { TruckContext } from '../../contexts/TruckContext';
 
-function End() {
+function End({ className }) {
   const { end24, setEnd24 } = useContext(TruckContext);
   return (
-    <div>
+    <div className={className}>
       <Input
         label="Close after"
         type="text"

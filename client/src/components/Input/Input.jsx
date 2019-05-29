@@ -2,7 +2,7 @@ import React from 'react';
 
 const Input = ({ label, ...rest }) => (
   <label>
-    {label}
+    <span>{label}</span>
     <input {...rest} />
   </label>
 );

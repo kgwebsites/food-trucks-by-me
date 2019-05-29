@@ -2,10 +2,10 @@ import React, { useContext } from 'react';
 import Input from '../Input/Input';
 import { TruckContext } from '../../contexts/TruckContext';
 
-function Range() {
+function Range({ className }) {
   const { range, setRange } = useContext(TruckContext);
   return (
-    <div>
+    <div className={className}>
       <Input
         label="Range (in miles)"
         type="number"
