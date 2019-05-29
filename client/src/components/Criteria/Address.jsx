@@ -2,10 +2,10 @@ import React, { useContext } from 'react';
 import Input from '../Input/Input';
 import { TruckContext } from '../../contexts/TruckContext';
 
-function Address() {
+function Address({ className }) {
   const { address, setAddress } = useContext(TruckContext);
   return (
-    <div>
+    <div className={className}>
       <Input
         label="Address"
         type="text"

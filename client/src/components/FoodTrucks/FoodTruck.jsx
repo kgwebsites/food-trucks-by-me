@@ -1,14 +1,23 @@
 import React from 'react';
+import styled from 'styled-components';
+
+const StyledFoodTruck = styled.div`
+  max-width: 300px;
+  .title {
+    margin-top: 0;
+    margin-bottom: 0;
+  }
+`;
 
 const FoodTruck = ({ truck }) => (
-  <div>
-    <h2>{truck.applicant}</h2>
-    <p>
-      Hours: {truck.starttime} - {truck.endtime}
-    </p>
-    <p>Address: {truck.location}</p>
+  <StyledFoodTruck>
+    <h2 className="title">{truck.applicant}</h2>
+    <small>
+      {truck.location}
+      <br />({truck.starttime} - {truck.endtime})
+    </small>
     <p>{truck.optionaltext}</p>
-  </div>
+  </StyledFoodTruck>
 );
 
 export default FoodTruck;

@@ -2,10 +2,10 @@ import React, { useContext } from 'react';
 import Input from '../Input/Input';
 import { TruckContext } from '../../contexts/TruckContext';
 
-function Day() {
+function Day({ className }) {
   const { day, setDay } = useContext(TruckContext);
   return (
-    <div>
+    <div className={className}>
       <Input
         label="Day"
         type="text"

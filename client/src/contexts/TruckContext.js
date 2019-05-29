@@ -16,16 +16,37 @@ export const TruckContext = React.createContext();
 
 const TruckContextProvider = ({ children }) => {
   const [loaded, setLoaded] = useState(false);
-  const [address, setAddress] = useState('');
+  const [address, setAddressState] = useState(
+    localStorage.getItem('address') || '',
+  );
   const [range, setRange] = useState(0.25);
   const [day, setDay] = useState(week[today.getDay()]);
-  const [start24, setStart24] = useState('12:00');
-  const [end24, setEnd24] = useState('13:00');
+  const [start24, setStart24State] = useState(
+    localStorage.getItem('start24') || '11:00',
+  );
+  const [end24, setEnd24State] = useState(
+    localStorage.getItem('end24') || '13:00',
+  );
   const [trucks, setTrucks] = useState([]);
   const [geolocation, setGeolocation] = useState({
     lng: 0,
     lat: 0,
   });
+
+  function setAddress(address) {
+    localStorage.setItem('address', address);
+    setAddressState(address);
+  }
+
+  function setStart24(start24) {
+    localStorage.setItem('start24', start24);
+    setStart24State(start24);
+  }
+
+  function setEnd24(end24) {
+    localStorage.setItem('end24', end24);
+    setEnd24State(end24);
+  }
 
   async function getFoodTrucks() {
     setLoaded(false);

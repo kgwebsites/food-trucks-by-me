@@ -1,13 +1,26 @@
 import React from 'react';
+import styled from 'styled-components';
 import './App.css';
 import Criteria from './components/Criteria/Criteria';
 import FoodTrucks from './components/FoodTrucks/FoodTrucks';
 import FoodMap from './components/FoodMap/FoodMap';
 import TruckContextProvider from './contexts/TruckContext';
 
+const StyledApp = styled.main`
+  .title {
+    margin-top: 0;
+    margin-bottom: 0;
+  }
+  .location {
+    margin-top: 0;
+  }
+`;
+
 function App() {
   return (
-    <div className="App">
+    <StyledApp className="App">
+      <h1 className="title">Food trucks by me</h1>
+      <h6 className="location">(San Francisco)</h6>
       <TruckContextProvider>
         <Criteria />
         <FoodMap
@@ -20,7 +33,26 @@ function App() {
         />
         <FoodTrucks />
       </TruckContextProvider>
-    </div>
+      <p>
+        Icons made by{' '}
+        <a href="https://www.freepik.com/" title="Freepik">
+          Freepik
+        </a>{' '}
+        from{' '}
+        <a href="https://www.flaticon.com/" title="Flaticon">
+          www.flaticon.com
+        </a>{' '}
+        is licensed by{' '}
+        <a
+          href="http://creativecommons.org/licenses/by/3.0/"
+          title="Creative Commons BY 3.0"
+          target="_blank"
+          rel="noopener noreferrer"
+        >
+          CC 3.0 BY
+        </a>
+      </p>
+    </StyledApp>
   );
 }
 
