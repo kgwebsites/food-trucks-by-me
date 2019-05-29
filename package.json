@@ -4,7 +4,7 @@
   "description": "",
   "main": "client/index.js",
   "scripts": {
-    "init": "npm i; concurrently --kill-others \"cd client; npm i;\" \"cd api; npm i\"",
+    "init": "npm i; cd client; npm i; cd ../; cd api; npm i",
     "dev": "concurrently --kill-others \"cd api; npm run start\" \"cd client; npm run start\""
   },
   "repository": {
