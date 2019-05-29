@@ -1,8 +1,8 @@
 require('dotenv').config();
 const express = require('express');
 const cors = require('cors');
-const fetchLongLat = require('./lib/fetchLongLat');
-const filterFoodTrucks = require('./lib/filterFoodTrucks');
+const fetchLongLat = require('./core/fetchLongLat');
+const filterFoodTrucks = require('./core/filterFoodTrucks');
 
 const app = express();
 const port = 3000;
