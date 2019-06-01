@@ -52,19 +52,22 @@ const TruckContextProvider = ({ children }) => {
   async function getFoodTrucks() {
     setLoaded(false);
     try {
-      const resp = await fetch('/.netlify/functions/get_food_trucks', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
+      const resp = await fetch(
+        `${process.env.REACT_APP_BASE_API}/get_food_trucks`,
+        {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({
+            address,
+            range,
+            day,
+            start24,
+            end24,
+          }),
         },
-        body: JSON.stringify({
-          address,
-          range,
-          day,
-          start24,
-          end24,
-        }),
-      });
+      );
       const data = await resp.json();
       setTrucks(data.trucks);
       setGeolocation({ lng: data.lng, lat: data.lat });

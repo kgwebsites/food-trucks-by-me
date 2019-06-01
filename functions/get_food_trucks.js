@@ -4,7 +4,6 @@ const filterFoodTrucks = require('./core/filterFoodTrucks');
 
 exports.handler = function(event, context, callback) {
   const { address, range, day, start24, end24 } = JSON.parse(event.body);
-  console.log(address, range, day, start24, end24);
   fetchLongLat(address)
     .then(({ lat, lng }) => {
       if (lng && lat) {

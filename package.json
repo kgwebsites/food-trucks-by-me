@@ -22,8 +22,8 @@
     "styled-components": "^4.2.1"
   },
   "scripts": {
-    "start": "concurrently \"netlify-lambda serve ./functions\", \"REACT_APP_BASE_API=localhost:9000/ react-scripts start\"",
-    "build": "REACT_APP_BASE_API=/./netlify/functions/ react-scripts build",
+    "start": "concurrently \"netlify-lambda serve ./functions\" \"REACT_APP_BASE_API=http://localhost:9000 react-scripts start\"",
+    "build": "REACT_APP_BASE_API=/./netlify/functions react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject"
   },
