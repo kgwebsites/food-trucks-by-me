@@ -6,11 +6,13 @@ const GOOGLE_MAP_TOKEN = 'AIzaSyCEEL1A-yyym_FOHJKysmGzBOWdVzzzGXs';
 
 function fetchLongLat(address) {
   return new Promise((res, rej) => {
-    fetch(
-      `https://maps.googleapis.com/maps/api/geocode/json?address=${address},+San+Francisco,+CA&key=${GOOGLE_MAP_TOKEN}`,
-    )
+    const mapsUrl = `https://maps.googleapis.com/maps/api/geocode/json?address=${address},+San+Francisco,+CA&key=${GOOGLE_MAP_TOKEN}`;
+    console.log(mapsUrl);
+    fetch(mapsUrl)
       .then(resp => {
+        console.log(resp);
         resp.json().then(data => {
+          console.log(data);
           if (
             data.status === 'OK' &&
             data.results &&
