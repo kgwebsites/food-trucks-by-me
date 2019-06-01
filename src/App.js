@@ -5,6 +5,7 @@ import Criteria from './components/Criteria/Criteria';
 import FoodTrucks from './components/FoodTrucks/FoodTrucks';
 import FoodMap from './components/FoodMap/FoodMap';
 import TruckContextProvider from './contexts/TruckContext';
+import Error from './components/Error';
 
 const StyledApp = styled.main`
   .title {
@@ -32,6 +33,7 @@ function App() {
           mapElement={<div style={{ height: `100%` }} />}
         />
         <FoodTrucks />
+        <Error />
       </TruckContextProvider>
       <p>
         Icons made by{' '}

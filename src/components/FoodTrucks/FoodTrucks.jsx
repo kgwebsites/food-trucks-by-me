@@ -11,8 +11,9 @@ const StyledFoodTrucks = styled.div`
 `;
 
 function FoodTrucks() {
-  const { trucks } = useContext(TruckContext);
+  const { trucks, error } = useContext(TruckContext);
 
+  if (error) return null;
   return (
     <StyledFoodTrucks>
       {trucks.map(truck => (

@@ -16,12 +16,12 @@ const StyledFoodMap = styled.div`
 `;
 
 function FoodMap() {
-  const { trucks, geolocation, loaded } = useContext(TruckContext);
+  const { trucks, geolocation, loaded, error } = useContext(TruckContext);
   const [openTruck, setOpenTruck] = useState('yourLocation');
   function closeTruckInfo() {
     setOpenTruck('');
   }
-  if (!loaded) return null;
+  if (!loaded || error) return null;
 
   return (
     <div>

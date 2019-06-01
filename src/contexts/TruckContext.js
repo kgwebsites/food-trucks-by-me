@@ -15,6 +15,7 @@ const today = new Date();
 export const TruckContext = React.createContext();
 
 const TruckContextProvider = ({ children }) => {
+  const [error, setError] = useState();
   const [loaded, setLoaded] = useState(false);
   const [address, setAddressState] = useState(
     localStorage.getItem('address') || '',
@@ -50,28 +51,33 @@ const TruckContextProvider = ({ children }) => {
 
   async function getFoodTrucks() {
     setLoaded(false);
-    const resp = await fetch('/.netlify/functions/get_food_trucks', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify({
-        address,
-        range,
-        day,
-        start24,
-        end24,
-      }),
-    });
-    const data = await resp.json();
-    setTrucks(data.trucks);
-    setGeolocation({ lng: data.lng, lat: data.lat });
-    setLoaded(true);
+    try {
+      const resp = await fetch('/.netlify/functions/get_food_trucks', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          address,
+          range,
+          day,
+          start24,
+          end24,
+        }),
+      });
+      const data = await resp.json();
+      setTrucks(data.trucks);
+      setGeolocation({ lng: data.lng, lat: data.lat });
+      setLoaded(true);
+    } catch (e) {
+      setError(e);
+    }
   }
 
   return (
     <TruckContext.Provider
       value={{
+        error,
         loaded,
         address,
         setAddress,

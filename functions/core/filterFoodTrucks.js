@@ -29,6 +29,7 @@ function filterFoodTrucks({ lng, lat, range, day, start24, end24 }) {
 
   const SFGOV_TOKEN = 'nP0IjR2Zi5erlnhj3kTeYs2VB';
 
+  console.log(url);
   return new Promise((res, rej) => {
     fetch(url, {
       headers: { 'X-App-Token': SFGOV_TOKEN },
