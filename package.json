@@ -22,8 +22,8 @@
     "styled-components": "^4.2.1"
   },
   "scripts": {
-    "start": "netlify-lambda serve ./functions; PORT=3001 react-scripts start",
-    "build": "react-scripts build",
+    "start": "concurrently \"netlify-lambda serve ./functions\", \"REACT_APP_BASE_API=localhost:9000/ react-scripts start\"",
+    "build": "REACT_APP_BASE_API=/./netlify/functions/ react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject"
   },
@@ -43,6 +43,7 @@
     ]
   },
   "devDependencies": {
+    "concurrently": "^4.1.0",
     "netlify-lambda": "^1.4.13"
   }
 }
