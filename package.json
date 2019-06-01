@@ -13,7 +13,6 @@
   "bugs": {
     "url": "https://github.com/kgwebsites/food-trucks-by-me/issues"
   },
-  "homepage": "https://github.com/kgwebsites/food-trucks-by-me#readme",
   "dependencies": {
     "node-fetch": "^2.6.0",
     "react": "^16.8.6",
