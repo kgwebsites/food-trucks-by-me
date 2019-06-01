@@ -1,12 +1,11 @@
 const fetch = require('node-fetch');
 
 // const { GOOGLE_MAP_TOKEN } = process.env;
-
-const GOOGLE_MAP_TOKEN = 'AIzaSyCEEL1A-yyym_FOHJKysmGzBOWdVzzzGXs';
+const { REACT_APP_GOOGLE_MAP_TOKEN } = process.env;
 
 function fetchLongLat(address) {
   return new Promise((res, rej) => {
-    const mapsUrl = `https://maps.googleapis.com/maps/api/geocode/json?address=${address},+San+Francisco,+CA&key=${GOOGLE_MAP_TOKEN}`;
+    const mapsUrl = `https://maps.googleapis.com/maps/api/geocode/json?address=${address},+San+Francisco,+CA&key=${REACT_APP_GOOGLE_MAP_TOKEN}`;
     fetch(mapsUrl)
       .then(resp => {
         resp.json().then(data => {
