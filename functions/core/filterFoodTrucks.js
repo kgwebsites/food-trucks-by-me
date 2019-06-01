@@ -29,11 +29,13 @@ function filterFoodTrucks({ lng, lat, range, day, start24, end24 }) {
 
   const SFGOV_TOKEN = 'nP0IjR2Zi5erlnhj3kTeYs2VB';
 
-  return fetch(url, {
-    headers: { 'X-App-Token': SFGOV_TOKEN },
-  })
-    .then(data => data.json().then(response => response))
-    .catch(err => err);
+  return new Promise((res, rej) => {
+    fetch(url, {
+      headers: { 'X-App-Token': SFGOV_TOKEN },
+    })
+      .then(data => data.json().then(response => res(response)))
+      .catch(err => rej(err));
+  });
 }
 
 module.exports = filterFoodTrucks;
