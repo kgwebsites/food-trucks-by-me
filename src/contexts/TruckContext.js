@@ -50,7 +50,7 @@ const TruckContextProvider = ({ children }) => {
 
   async function getFoodTrucks() {
     setLoaded(false);
-    const resp = await fetch('http://localhost:3000', {
+    const resp = await fetch('/.netlify/functions/getFoodTrucks', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',

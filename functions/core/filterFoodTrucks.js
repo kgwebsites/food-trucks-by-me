@@ -27,8 +27,10 @@ async function filterFoodTrucks({ lng, lat, range, day, start24, end24 }) {
     `https://data.sfgov.org/resource/jjew-r69b.json?$where= ${dowSoQL} AND ${start24SoQL} AND ${end24SoQL} AND ${latSoQL} AND ${lngSoQL}`,
   );
 
+  const SFGOV_TOKEN = 'nP0IjR2Zi5erlnhj3kTeYs2VB';
+
   const data = await fetch(url, {
-    headers: { 'X-App-Token': process.env.SFGOV_TOKEN },
+    headers: { 'X-App-Token': SFGOV_TOKEN },
   });
   const response = await data.json();
   return response;

@@ -1,6 +1,8 @@
 const fetch = require('node-fetch');
 
-const { GOOGLE_MAP_TOKEN } = process.env;
+// const { GOOGLE_MAP_TOKEN } = process.env;
+
+const GOOGLE_MAP_TOKEN = 'AIzaSyCEEL1A-yyym_FOHJKysmGzBOWdVzzzGXs';
 
 async function fetchLongLat(address) {
   const resp = await fetch(
