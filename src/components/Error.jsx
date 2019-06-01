@@ -1,5 +1,5 @@
 import React, { useContext } from 'react';
-import { TruckContext } from '../../contexts/TruckContext';
+import { TruckContext } from '../contexts/TruckContext';
 
 function Error() {
   const { error } = useContext(TruckContext);
