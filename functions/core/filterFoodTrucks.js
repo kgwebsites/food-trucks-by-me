@@ -1,6 +1,6 @@
 const fetch = require('node-fetch');
 
-async function filterFoodTrucks({ lng, lat, range, day, start24, end24 }) {
+function filterFoodTrucks({ lng, lat, range, day, start24, end24 }) {
   const latDeg = 69.172;
   const degToRad = 0.0174533;
 
@@ -29,11 +29,11 @@ async function filterFoodTrucks({ lng, lat, range, day, start24, end24 }) {
 
   const SFGOV_TOKEN = 'nP0IjR2Zi5erlnhj3kTeYs2VB';
 
-  const data = await fetch(url, {
+  return fetch(url, {
     headers: { 'X-App-Token': SFGOV_TOKEN },
-  });
-  const response = await data.json();
-  return response;
+  })
+    .then(data => data.json().then(response => response))
+    .catch(err => err);
 }
 
 module.exports = filterFoodTrucks;

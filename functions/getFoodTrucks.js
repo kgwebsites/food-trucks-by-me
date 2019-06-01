@@ -2,21 +2,33 @@
 const fetchLongLat = require('./core/fetchLongLat');
 const filterFoodTrucks = require('./core/filterFoodTrucks');
 
-exports.handler = async function(event, context, callback) {
+exports.handler = function(event, context, callback) {
   const { address, range, day, start24, end24 } = event.body;
-  const { lat, lng } = await fetchLongLat(address);
-  if (lng && lat) {
-    const response = await filterFoodTrucks({
-      lng,
-      lat,
-      range,
-      day,
-      start24,
-      end24,
+  fetchLongLat(address)
+    .then(({ lat, lng }) => {
+      if (lng && lat) {
+        filterFoodTrucks({
+          lng,
+          lat,
+          range,
+          day,
+          start24,
+          end24,
+        })
+          .then(response => {
+            callback(null, {
+              statusCode: 200,
+              body: JSON.stringify({ trucks: response, lng, lat }),
+            });
+          })
+          .catch(() => {
+            throw new Error('Something went wrong, try again later');
+          });
+      } else {
+        throw new Error('Invalid address');
+      }
+    })
+    .catch(err => {
+      callback(err);
     });
-    callback(null, {
-      statusCode: 200,
-      body: JSON.stringify({ trucks: response, lng, lat }),
-    });
-  } else callback('Invalid address');
 };
