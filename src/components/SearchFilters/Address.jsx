@@ -1,5 +1,6 @@
 import React, { useContext } from 'react';
-import Input from '../Input/Input';
+import PropTypes from 'prop-types';
+import Input from '../Input';
 import { TruckContext } from '../../contexts/TruckContext';
 
 function Address({ className }) {
@@ -7,7 +8,6 @@ function Address({ className }) {
   return (
     <div className={className}>
       <Input
-        label="Address"
         type="text"
         value={address}
         placeholder="353 Sacramento St"
@@ -17,5 +17,13 @@ function Address({ className }) {
     </div>
   );
 }
+
+Address.propTypes = {
+  className: PropTypes.string,
+};
+
+Address.defaultProps = {
+  className: '',
+};
 
 export default React.memo(Address);

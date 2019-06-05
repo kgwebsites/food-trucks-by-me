@@ -1,13 +1,14 @@
 import React from 'react';
 import styled from 'styled-components';
-import './App.css';
-import Criteria from './components/Criteria/Criteria';
+import Header from './components/Header/Header';
+import Footer from './components/Footer';
 import FoodTrucks from './components/FoodTrucks/FoodTrucks';
 import FoodMap from './components/FoodMap/FoodMap';
 import TruckContextProvider from './contexts/TruckContext';
 import Error from './components/Error';
 
 const StyledApp = styled.main`
+  min-height: 100vh;
   .title {
     margin-top: 0;
     margin-bottom: 0;
@@ -20,10 +21,8 @@ const StyledApp = styled.main`
 function App() {
   return (
     <StyledApp className="App">
-      <h1 className="title">Food trucks by me</h1>
-      <h6 className="location">(San Francisco)</h6>
       <TruckContextProvider>
-        <Criteria />
+        <Header />
         <FoodMap
           googleMapURL={`https://maps.googleapis.com/maps/api/js?key=${
             process.env.REACT_APP_GOOGLE_MAP_TOKEN
@@ -35,25 +34,7 @@ function App() {
         <FoodTrucks />
         <Error />
       </TruckContextProvider>
-      <p>
-        Icons made by{' '}
-        <a href="https://www.freepik.com/" title="Freepik">
-          Freepik
-        </a>{' '}
-        from{' '}
-        <a href="https://www.flaticon.com/" title="Flaticon">
-          www.flaticon.com
-        </a>{' '}
-        is licensed by{' '}
-        <a
-          href="http://creativecommons.org/licenses/by/3.0/"
-          title="Creative Commons BY 3.0"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          CC 3.0 BY
-        </a>
-      </p>
+      <Footer />
     </StyledApp>
   );
 }
