@@ -3,9 +3,10 @@ const fetch = require('node-fetch');
 // const { GOOGLE_MAP_TOKEN } = process.env;
 const { REACT_APP_GOOGLE_MAP_TOKEN } = process.env;
 
-function fetchLongLat(lat, lng) {
+function fetchAddress(lat, lng) {
   return new Promise((res, rej) => {
     const mapsUrl = `https://maps.googleapis.com/maps/api/geocode/json?latlng=${lat},${lng}&key=${REACT_APP_GOOGLE_MAP_TOKEN}`;
+    console.log(mapsUrl);
     fetch(mapsUrl)
       .then(resp => {
         resp.json().then(data => {
@@ -36,4 +37,4 @@ function fetchLongLat(lat, lng) {
   });
 }
 
-module.exports = fetchLongLat;
+module.exports = fetchAddress;
