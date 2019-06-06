@@ -83,7 +83,7 @@ const TruckContextProvider = ({ children }) => {
     if ('geolocation' in navigator) {
       navigator.geolocation.getCurrentPosition(async function(position) {
         try {
-          const resp = await fetch(
+          const foundAddress = await fetch(
             `/.netlify/functions/get_address_from_coor`,
             {
               method: 'POST',
@@ -96,7 +96,6 @@ const TruckContextProvider = ({ children }) => {
               }),
             },
           );
-          const foundAddress = await resp.json();
           setAddress(foundAddress);
         } catch (e) {
           setError(e);
