@@ -43,7 +43,7 @@ function Header() {
           className="link listMapLink"
           onClick={toggleMapList}
         >
-          {mapList === 'map' ? 'Map' : 'List'}
+          {mapList === 'map' ? 'List' : 'Map'}
         </button>
         <Address className="headerInput" />
       </div>
