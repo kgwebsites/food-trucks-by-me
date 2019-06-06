@@ -23,7 +23,7 @@ const TruckContextProvider = ({ children }) => {
     else setMapList('map');
   }
   const [address, setAddressState] = useState(
-    localStorage.getItem('address') || '',
+    localStorage.getItem('address') || '353 sacramento st',
   );
   const [range, setRange] = useState(0.25);
   const [day, setDay] = useState(week[today.getDay()]);

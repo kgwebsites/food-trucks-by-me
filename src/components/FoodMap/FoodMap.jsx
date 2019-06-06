@@ -69,8 +69,6 @@ function FoodMap() {
 const Injector = withScriptjs(withGoogleMap(FoodMap));
 
 export default props => {
-  const { loaded } = useContext(TruckContext);
-  if (!loaded) return null;
   return (
     <StyledFoodMap>
       <Injector {...props} />
