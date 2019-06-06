@@ -5,7 +5,7 @@ import styled from 'styled-components';
 const StyledButton = styled.button`
   border: 1px solid var(--blue);
   background: transparent;
-  padding: var(--gutter) var(--gutter-2);
+  padding: var(--gutter);
   color: var(--blue);
 `;
 

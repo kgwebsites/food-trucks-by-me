@@ -1,4 +1,3 @@
-// require('dotenv').config();
 const fetchLongLat = require('./core/fetchLongLat');
 const filterFoodTrucks = require('./core/filterFoodTrucks');
 

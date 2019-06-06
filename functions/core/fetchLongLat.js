@@ -8,9 +8,7 @@ function fetchLongLat(address) {
     const mapsUrl = `https://maps.googleapis.com/maps/api/geocode/json?address=${address},+San+Francisco,+CA&key=${REACT_APP_GOOGLE_MAP_TOKEN}`;
     fetch(mapsUrl)
       .then(resp => {
-        console.log(resp);
         resp.json().then(data => {
-          console.log('data', data);
           if (
             data.status === 'OK' &&
             data.results &&

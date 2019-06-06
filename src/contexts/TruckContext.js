@@ -79,6 +79,27 @@ const TruckContextProvider = ({ children }) => {
     }
   }
 
+  if ('geolocation' in navigator) {
+    navigator.geolocation.getCurrentPosition(async function(position) {
+      try {
+        const resp = await fetch(`/.netlify/functions/get_address_from_coor`, {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({
+            lng: position.coords.latitude,
+            lat: position.coords.latitude,
+          }),
+        });
+        const foundAddress = await resp.json();
+        setAddress(foundAddress);
+      } catch (e) {
+        setError(e);
+      }
+    });
+  }
+
   return (
     <TruckContext.Provider
       value={{

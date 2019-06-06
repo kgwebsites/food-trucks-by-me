@@ -16,7 +16,7 @@ const StyledTime = styled.div`
       &:after {
         content: ' ';
         display: block;
-        height: 27px;
+        height: 26px;
         border-bottom: 2px solid white;
         width: 18px;
         position: absolute;
