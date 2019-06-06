@@ -17,6 +17,11 @@ export const TruckContext = React.createContext();
 const TruckContextProvider = ({ children }) => {
   const [error, setError] = useState();
   const [loaded, setLoaded] = useState(false);
+  const [mapList, setMapList] = useState('map');
+  function toggleMapList() {
+    if (mapList === 'map') setMapList('list');
+    else setMapList('map');
+  }
   const [address, setAddressState] = useState(
     localStorage.getItem('address') || '',
   );
@@ -52,22 +57,19 @@ const TruckContextProvider = ({ children }) => {
   async function getFoodTrucks() {
     setLoaded(false);
     try {
-      const resp = await fetch(
-        `${process.env.REACT_APP_BASE_API}/get_food_trucks`,
-        {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json',
-          },
-          body: JSON.stringify({
-            address,
-            range,
-            day,
-            start24,
-            end24,
-          }),
+      const resp = await fetch(`/.netlify/functions/get_food_trucks`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
         },
-      );
+        body: JSON.stringify({
+          address,
+          range,
+          day,
+          start24,
+          end24,
+        }),
+      });
       const data = await resp.json();
       setTrucks(data.trucks);
       setGeolocation({ lng: data.lng, lat: data.lat });
@@ -82,6 +84,8 @@ const TruckContextProvider = ({ children }) => {
       value={{
         error,
         loaded,
+        mapList,
+        toggleMapList,
         address,
         setAddress,
         range,

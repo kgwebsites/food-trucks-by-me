@@ -28,7 +28,7 @@ const StyledHeader = styled.form`
 `;
 
 function Header() {
-  const { getFoodTrucks } = useContext(TruckContext);
+  const { getFoodTrucks, toggleMapList, mapList } = useContext(TruckContext);
 
   function onSubmit(e) {
     e.preventDefault();
@@ -38,7 +38,13 @@ function Header() {
   return (
     <StyledHeader onSubmit={onSubmit}>
       <div className="searchRow">
-        <button className="link listMapLink">List</button>
+        <button
+          type="button"
+          className="link listMapLink"
+          onClick={toggleMapList}
+        >
+          {mapList === 'map' ? 'Map' : 'List'}
+        </button>
         <Address className="headerInput" />
       </div>
       <SearchFilters />

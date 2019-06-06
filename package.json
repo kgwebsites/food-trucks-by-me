@@ -15,6 +15,7 @@
   },
   "dependencies": {
     "@wojtekmaj/react-timerange-picker": "^2.1.0",
+    "http-proxy-middleware": "^0.19.1",
     "node-fetch": "^2.6.0",
     "prop-types": "^15.7.2",
     "react": "^16.8.6",
@@ -27,8 +28,8 @@
     "styled-components": "^4.2.1"
   },
   "scripts": {
-    "start": "concurrently \"netlify-lambda serve ./functions_dev\" \"REACT_APP_BASE_API=http://localhost:9000 react-scripts start\"",
-    "build": "REACT_APP_BASE_API=/.netlify/functions react-scripts build",
+    "start": "react-scripts start",
+    "build": "react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject"
   },
@@ -46,9 +47,5 @@
       "last 1 firefox version",
       "last 1 safari version"
     ]
-  },
-  "devDependencies": {
-    "concurrently": "^4.1.0",
-    "netlify-lambda": "^1.4.13"
   }
 }

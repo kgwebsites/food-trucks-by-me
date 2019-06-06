@@ -3,27 +3,27 @@ import styled from 'styled-components';
 import { TruckContext } from '../../contexts/TruckContext';
 import FoodTruck from './FoodTruck';
 
-const StyledFoodTrucks = styled.div`
+const StyledFoodList = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
 `;
 
-function FoodTrucks() {
+function FoodList() {
   const { trucks, error } = useContext(TruckContext);
 
   if (error) return null;
   return (
-    <StyledFoodTrucks>
+    <StyledFoodList>
       {trucks.map(truck => (
         <FoodTruck
           key={`${truck.permit}-${truck.cnn}-${truck.locationid}`}
           truck={truck}
         />
       ))}
-    </StyledFoodTrucks>
+    </StyledFoodList>
   );
 }
 
-export default FoodTrucks;
+export default FoodList;

@@ -8,7 +8,7 @@ import {
   InfoWindow,
 } from 'react-google-maps';
 import { TruckContext } from '../../contexts/TruckContext';
-import FoodTruck from '../FoodTrucks/FoodTruck';
+import FoodTruck from '../FoodList/FoodTruck';
 import FoodTruckIcon from '../../assets/food-truck.svg';
 
 const StyledFoodMap = styled.div`

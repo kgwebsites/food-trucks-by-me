@@ -1,7 +1,6 @@
 import React, { useContext } from 'react';
 import styled from 'styled-components';
 import Select from 'react-select';
-import Input from '../Input';
 import { TruckContext } from '../../contexts/TruckContext';
 
 const StyledDay = styled.div`
