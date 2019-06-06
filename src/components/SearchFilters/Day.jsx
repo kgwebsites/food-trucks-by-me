@@ -21,7 +21,6 @@ const days = [
 
 function Day({ className }) {
   const { day, setDay } = useContext(TruckContext);
-  console.log(day);
   return (
     <StyledDay className={className}>
       <Select
