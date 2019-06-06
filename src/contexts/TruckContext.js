@@ -81,6 +81,7 @@ const TruckContextProvider = ({ children }) => {
 
   if ('geolocation' in navigator) {
     navigator.geolocation.getCurrentPosition(async function(position) {
+      console.log(position);
       try {
         const resp = await fetch(`/.netlify/functions/get_address_from_coor`, {
           method: 'POST',
