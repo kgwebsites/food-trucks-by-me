@@ -9,6 +9,7 @@ function fetchLongLat(lat, lng) {
     fetch(mapsUrl)
       .then(resp => {
         resp.json().then(data => {
+          console.log('data', data);
           if (
             data.status === 'OK' &&
             data.results &&

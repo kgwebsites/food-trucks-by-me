@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 
 const week = [
   'Sunday',
@@ -79,26 +79,31 @@ const TruckContextProvider = ({ children }) => {
     }
   }
 
-  if ('geolocation' in navigator) {
-    navigator.geolocation.getCurrentPosition(async function(position) {
-      try {
-        const resp = await fetch(`/.netlify/functions/get_address_from_coor`, {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json',
-          },
-          body: JSON.stringify({
-            lng: position.coords.latitude,
-            lat: position.coords.longitude,
-          }),
-        });
-        const foundAddress = await resp.json();
-        setAddress(foundAddress);
-      } catch (e) {
-        setError(e);
-      }
-    });
-  }
+  useEffect(() => {
+    if ('geolocation' in navigator) {
+      navigator.geolocation.getCurrentPosition(async function(position) {
+        try {
+          const resp = await fetch(
+            `/.netlify/functions/get_address_from_coor`,
+            {
+              method: 'POST',
+              headers: {
+                'Content-Type': 'application/json',
+              },
+              body: JSON.stringify({
+                lng: position.coords.latitude,
+                lat: position.coords.longitude,
+              }),
+            },
+          );
+          const foundAddress = await resp.json();
+          setAddress(foundAddress);
+        } catch (e) {
+          setError(e);
+        }
+      });
+    }
+  }, []);
 
   return (
     <TruckContext.Provider
