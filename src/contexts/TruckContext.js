@@ -91,8 +91,8 @@ const TruckContextProvider = ({ children }) => {
                 'Content-Type': 'application/json',
               },
               body: JSON.stringify({
-                lng: position.coords.latitude,
-                lat: position.coords.longitude,
+                lng: position.coords.longitude,
+                lat: position.coords.latitude,
               }),
             },
           );
