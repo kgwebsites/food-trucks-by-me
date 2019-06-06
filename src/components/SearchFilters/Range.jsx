@@ -23,7 +23,7 @@ function Range({ className }) {
   return (
     <StyledRange className={className}>
       <InputRange
-        maxValue={10}
+        maxValue={3}
         minValue={0}
         step={0.25}
         value={range}
