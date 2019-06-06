@@ -96,8 +96,8 @@ const TruckContextProvider = ({ children }) => {
               }),
             },
           );
-          const foundAddress = await resp.json();
-          setAddress(foundAddress);
+          const data = await resp.json();
+          setAddress(data.address);
         } catch (e) {
           setError(e);
         }
