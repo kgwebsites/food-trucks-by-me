@@ -98,12 +98,12 @@ const TruckContextProvider = ({ children }) => {
           );
           const data = await resp.json();
           setAddress(data.address);
-          getFoodTrucks();
         } catch (e) {
           setError(e);
         }
       });
     }
+    getFoodTrucks();
   }, []);
 
   return (
