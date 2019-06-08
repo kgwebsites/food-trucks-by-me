@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 
 const week = [
   'Sunday',
@@ -56,57 +56,58 @@ const TruckContextProvider = ({ children }) => {
     setEnd24State(end24);
   }
 
-  async function getFoodTrucks() {
-    setLoaded(false);
-    try {
-      const resp = await fetch(`/.netlify/functions/get_food_trucks`, {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({
-          address,
-          range,
-          day,
-          start24,
-          end24,
-        }),
-      });
-      const data = await resp.json();
-      setTrucks(data.trucks);
-      setGeolocation({ lng: data.lng, lat: data.lat });
-      setLoaded(true);
-    } catch (e) {
-      setError(e);
-    }
-  }
+  const getFoodTrucks = useCallback(
+    async coor => {
+      setLoaded(false);
+      try {
+        const resp = await fetch(`${window.API_ROOT}/get_food_trucks`, {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({
+            address,
+            coor,
+            range,
+            day,
+            start24,
+            end24,
+          }),
+        });
+        const data = await resp.json();
+        setTrucks(data.trucks);
+        setGeolocation({ lng: data.lng, lat: data.lat });
+        setLoaded(true);
+      } catch (e) {
+        setError(e);
+      }
+    },
+    [address, range, day, start24, end24],
+  );
 
   useEffect(() => {
     if ('geolocation' in navigator) {
       navigator.geolocation.getCurrentPosition(async function(position) {
+        getFoodTrucks(position.coords);
         try {
-          const resp = await fetch(
-            `/.netlify/functions/get_address_from_coor`,
-            {
-              method: 'POST',
-              headers: {
-                'Content-Type': 'application/json',
-              },
-              body: JSON.stringify({
-                lng: position.coords.longitude,
-                lat: position.coords.latitude,
-              }),
+          const resp = await fetch(`${window.API_ROOT}/get_address_from_coor`, {
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/json',
             },
-          );
+            body: JSON.stringify({
+              lng: position.coords.longitude,
+              lat: position.coords.latitude,
+            }),
+          });
           const data = await resp.json();
           setAddress(data.address);
         } catch (e) {
           setError(e);
         }
       });
-    }
-    getFoodTrucks();
-  }, []);
+    } else getFoodTrucks();
+  }, [getFoodTrucks]);
 
   return (
     <TruckContext.Provider

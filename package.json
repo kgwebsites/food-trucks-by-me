@@ -28,7 +28,7 @@
     "styled-components": "^4.2.1"
   },
   "scripts": {
-    "start": "react-scripts start",
+    "start": "concurrently --kill-others \"node devServer\" \"react-scripts start\"",
     "build": "react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject"
@@ -47,5 +47,12 @@
       "last 1 firefox version",
       "last 1 safari version"
     ]
+  },
+  "devDependencies": {
+    "concurrently": "^4.1.0",
+    "express": "^4.17.1",
+    "cors": "^2.8.5",
+    "dotenv": "^8.0.0",
+    "node-fetch": "^2.6.0"
   }
 }

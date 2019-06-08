@@ -2,9 +2,15 @@ const fetchLongLat = require('./core/fetchLongLat');
 const filterFoodTrucks = require('./core/filterFoodTrucks');
 
 exports.handler = async function(event, context, callback) {
-  const { address, range, day, start24, end24 } = JSON.parse(event.body);
+  const { address, coor, range, day, start24, end24 } = JSON.parse(event.body);
   try {
-    const { lat, lng } = await fetchLongLat(address);
+    let lat, lng;
+    if (coor) {
+      lat = coor.latitude;
+      lng = coor.longitude;
+    } else {
+      ({ lat, lng } = await fetchLongLat(address));
+    }
     if (lng && lat) {
       const response = await filterFoodTrucks({
         lng,
