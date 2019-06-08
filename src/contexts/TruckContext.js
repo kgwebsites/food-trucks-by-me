@@ -28,10 +28,12 @@ const TruckContextProvider = ({ children }) => {
   const [range, setRange] = useState(0.25);
   const [day, setDay] = useState(week[today.getDay()]);
   const [start24, setStart24State] = useState(
-    localStorage.getItem('start24') || '11:00',
+    localStorage.getItem('start24') ||
+      `${new Date().getHours()}:${new Date().getMinutes()}`,
   );
   const [end24, setEnd24State] = useState(
-    localStorage.getItem('end24') || '13:00',
+    localStorage.getItem('end24') ||
+      `${new Date().getHours() + 1}:${new Date().getMinutes()}`,
   );
   const [trucks, setTrucks] = useState([]);
   const [geolocation, setGeolocation] = useState({

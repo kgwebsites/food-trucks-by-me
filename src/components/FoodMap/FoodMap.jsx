@@ -13,6 +13,10 @@ import FoodTruckIcon from '../../assets/food-truck.svg';
 
 const StyledFoodMap = styled.div`
   margin-bottom: 24px;
+  .gm-style-iw.gm-style-iw-c {
+    min-height: 40px;
+    min-width: 105px;
+  }
 `;
 
 function FoodMap() {
