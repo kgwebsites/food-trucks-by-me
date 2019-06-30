@@ -25,7 +25,8 @@ exports.handler = async function(event, context, callback) {
           statusCode: 200,
           body: JSON.stringify({ trucks: response, lng, lat }),
         });
-      } catch {
+      } catch (err) {
+        console.log(err);
         throw new Error('Something went wrong, try again later');
       }
     } else {
