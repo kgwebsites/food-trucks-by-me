@@ -1,6 +1,5 @@
 const fetch = require('node-fetch');
 
-// const { GOOGLE_MAP_TOKEN } = process.env;
 const { REACT_APP_GOOGLE_MAP_TOKEN } = process.env;
 
 function fetchAddress(lat, lng) {
