@@ -2,6 +2,7 @@
 
 :root {
   --blue: #4a85a7;
+  --greyLight: #eeeeee;
   --grey: #d8e6e4;
   --gutter: 8px;
   --gutter-2: 16px;
@@ -36,4 +37,12 @@ a {
   background: none;
   border: 0;
   color: var(--blue);
+}
+
+.mt-0 {
+  margin-top: 0;
+}
+
+.mb-0 {
+  margin-bottom: 0;
 }

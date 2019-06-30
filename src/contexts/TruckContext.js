@@ -1,4 +1,7 @@
 import React, { useState, useEffect, useCallback } from 'react';
+import { withRouter } from 'react-router-dom';
+import { useCookies } from 'react-cookie';
+import filterTrucks from '../utils/filterTrucks';
 
 const week = [
   'Sunday',
@@ -14,28 +17,63 @@ const today = new Date();
 
 export const TruckContext = React.createContext();
 
-const TruckContextProvider = ({ children }) => {
+const TruckContextProvider = ({ children, history }) => {
   const [error, setError] = useState();
+
   const [loaded, setLoaded] = useState(false);
-  const [mapList, setMapList] = useState('map');
-  function toggleMapList() {
-    if (mapList === 'map') setMapList('list');
-    else setMapList('map');
+
+  const [mapOrList, setMapOrList] = useState('map');
+  function toggleMapOrList() {
+    if (mapOrList === 'map') setMapOrList('list');
+    else setMapOrList('map');
   }
+
   const [address, setAddressState] = useState(
     localStorage.getItem('address') || '353 sacramento st',
   );
+
   const [range, setRange] = useState(0.25);
-  const [day, setDay] = useState(week[today.getDay()]);
+
+  const [cookies, setCookie] = useCookies(['day']);
+  const [day, setDayState] = useState(
+    cookies.day ? cookies.day : week[today.getDay()],
+  );
+  function setDay(newDay) {
+    const end = today;
+    end.setHours(23, 59, 59, 999);
+    setCookie('day', newDay, { expires: end });
+    setDayState(newDay);
+  }
+
   const [start24, setStart24State] = useState(
     localStorage.getItem('start24') ||
       `${new Date().getHours()}:${new Date().getMinutes()}`,
   );
+
   const [end24, setEnd24State] = useState(
     localStorage.getItem('end24') ||
       `${new Date().getHours() + 1}:${new Date().getMinutes()}`,
   );
+
   const [trucks, setTrucks] = useState([]);
+
+  const [resultFilters, setResultFiltersState] = useState({});
+  function setResultFilters(filters) {
+    setResultFiltersState(filters);
+    if (filters && Object.keys(filters).length) {
+      let newTrucks = trucks;
+      Object.entries(filters).forEach(([filterType, filter]) => {
+        newTrucks = filterTrucks({
+          trucks: newTrucks,
+          filterType,
+          filter,
+        });
+      });
+      setTrucks(newTrucks);
+      history.push('/list');
+    }
+  }
+
   const [geolocation, setGeolocation] = useState({
     lng: 0,
     lat: 0,
@@ -86,27 +124,28 @@ const TruckContextProvider = ({ children }) => {
   );
 
   useEffect(() => {
-    if ('geolocation' in navigator) {
-      navigator.geolocation.getCurrentPosition(async function(position) {
-        getFoodTrucks(position.coords);
-        try {
-          const resp = await fetch(`${window.API_ROOT}/get_address_from_coor`, {
-            method: 'POST',
-            headers: {
-              'Content-Type': 'application/json',
-            },
-            body: JSON.stringify({
-              lng: position.coords.longitude,
-              lat: position.coords.latitude,
-            }),
-          });
-          const data = await resp.json();
-          setAddress(data.address);
-        } catch (e) {
-          setError(e);
-        }
-      });
-    } else getFoodTrucks();
+    // if ('geolocation' in navigator) {
+    //   navigator.geolocation.getCurrentPosition(async function(position) {
+    //     getFoodTrucks(position.coords);
+    //     try {
+    //       const resp = await fetch(`${window.API_ROOT}/get_address_from_coor`, {
+    //         method: 'POST',
+    //         headers: {
+    //           'Content-Type': 'application/json',
+    //         },
+    //         body: JSON.stringify({
+    //           lng: position.coords.longitude,
+    //           lat: position.coords.latitude,
+    //         }),
+    //       });
+    //       const data = await resp.json();
+    //       setAddress(data.address);
+    //     } catch (e) {
+    //       setError(e);
+    //     }
+    //   });
+    // } else
+    getFoodTrucks();
   }, [getFoodTrucks]);
 
   return (
@@ -114,8 +153,8 @@ const TruckContextProvider = ({ children }) => {
       value={{
         error,
         loaded,
-        mapList,
-        toggleMapList,
+        mapOrList,
+        toggleMapOrList,
         address,
         setAddress,
         range,
@@ -126,6 +165,8 @@ const TruckContextProvider = ({ children }) => {
         setStart24,
         end24,
         setEnd24,
+        resultFilters,
+        setResultFilters,
         getFoodTrucks,
         trucks,
         geolocation,
@@ -136,4 +177,4 @@ const TruckContextProvider = ({ children }) => {
   );
 };
 
-export default TruckContextProvider;
+export default withRouter(TruckContextProvider);

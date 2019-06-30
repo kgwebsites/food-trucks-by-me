@@ -1,5 +1,6 @@
 import React, { useContext, useState } from 'react';
 import styled from 'styled-components';
+import posed from 'react-pose';
 import {
   withGoogleMap,
   withScriptjs,
@@ -19,6 +20,10 @@ const StyledFoodMap = styled.div`
   }
 `;
 
+const PoseContainer = posed.div({
+  enter: { staggerChildren: 50 },
+});
+
 function FoodMap() {
   const { trucks, geolocation, loaded, error } = useContext(TruckContext);
   const [openTruck, setOpenTruck] = useState('yourLocation');
@@ -28,7 +33,7 @@ function FoodMap() {
   if (!loaded || error) return null;
 
   return (
-    <div>
+    <PoseContainer>
       <GoogleMap defaultZoom={16} defaultCenter={geolocation}>
         <>
           <Marker
@@ -66,7 +71,7 @@ function FoodMap() {
           })}
         </>
       </GoogleMap>
-    </div>
+    </PoseContainer>
   );
 }
 

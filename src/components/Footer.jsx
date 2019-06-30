@@ -1,32 +1,24 @@
 import React from 'react';
 import styled from 'styled-components';
+import { Link } from 'react-router-dom';
+import { ReactComponent as Cog } from '../assets/cog.svg';
 
 const StyledFooter = styled.footer`
+  display: flex;
+  flex-direction: row-reverse;
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
   padding: var(--gutter);
 `;
 
 function Footer() {
   return (
     <StyledFooter>
-      <p>
-        Icons made by{' '}
-        <a href="https://www.freepik.com/" title="Freepik">
-          Freepik
-        </a>{' '}
-        from{' '}
-        <a href="https://www.flaticon.com/" title="Flaticon">
-          www.flaticon.com
-        </a>{' '}
-        is licensed by{' '}
-        <a
-          href="http://creativecommons.org/licenses/by/3.0/"
-          title="Creative Commons BY 3.0"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          CC 3.0 BY
-        </a>
-      </p>
+      <Link to="/settings">
+        <Cog />
+      </Link>
     </StyledFooter>
   );
 }
