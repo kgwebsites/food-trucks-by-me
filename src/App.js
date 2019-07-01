@@ -10,6 +10,7 @@ import Error from './components/Error';
 
 const StyledApp = styled.main`
   min-height: 100vh;
+  overflow: hidden;
   .title {
     margin-top: 0;
     margin-bottom: 0;

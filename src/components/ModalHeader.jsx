@@ -10,6 +10,9 @@ const StyledModalHeader = styled.header`
   justify-content: space-between;
   align-items: center;
   margin-bottom: var(--gutter);
+  button {
+    cursor: pointer;
+  }
 `;
 
 function ModalHeader({ title, history }) {

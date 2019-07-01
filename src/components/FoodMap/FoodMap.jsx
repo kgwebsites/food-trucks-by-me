@@ -25,7 +25,9 @@ const PoseContainer = posed.div({
 });
 
 function FoodMap() {
-  const { trucks, geolocation, loaded, error } = useContext(TruckContext);
+  const { trucks, address, geolocation, loaded, error } = useContext(
+    TruckContext,
+  );
   const [openTruck, setOpenTruck] = useState('yourLocation');
   function closeTruckInfo() {
     setOpenTruck('');
@@ -63,7 +65,7 @@ function FoodMap() {
               >
                 {openTruck === truckId && (
                   <InfoWindow onCloseClick={closeTruckInfo}>
-                    <FoodTruck truck={truck} />
+                    <FoodTruck truck={truck} address={address} />
                   </InfoWindow>
                 )}
               </Marker>

@@ -13,6 +13,10 @@ const StyledFoodList = styled.div`
   padding: 0 var(--gutter);
   max-width: 800px;
   margin: auto;
+  .FoodTruck {
+    border-bottom: 1px solid var(--greyLight);
+    margin-bottom: var(--gutter-2);
+  }
 `;
 
 const PoseContainer = posed.div({
@@ -20,7 +24,7 @@ const PoseContainer = posed.div({
 });
 
 function FoodList({ location }) {
-  const { trucks, error, loaded } = useContext(TruckContext);
+  const { trucks, address, error, loaded } = useContext(TruckContext);
 
   if (error) return null;
 
@@ -35,6 +39,7 @@ function FoodList({ location }) {
               <FoodTruck
                 key={`${truck.permit}-${truck.cnn}-${truck.locationid}`}
                 truck={truck}
+                address={address}
               />
             ))}
             {!trucks.length && <h2 className="mt-0">No Food Trucks Found</h2>}

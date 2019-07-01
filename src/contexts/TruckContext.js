@@ -17,12 +17,14 @@ const today = new Date();
 
 export const TruckContext = React.createContext();
 
-const TruckContextProvider = ({ children, history }) => {
+const TruckContextProvider = ({ children, history, location }) => {
   const [error, setError] = useState();
 
   const [loaded, setLoaded] = useState(false);
 
-  const [mapOrList, setMapOrList] = useState('map');
+  const [mapOrList, setMapOrList] = useState(
+    location.pathname === '/' ? 'map' : 'list',
+  );
   function toggleMapOrList() {
     if (mapOrList === 'map') setMapOrList('list');
     else setMapOrList('map');
@@ -56,22 +58,20 @@ const TruckContextProvider = ({ children, history }) => {
   );
 
   const [trucks, setTrucks] = useState([]);
+  const [trucksRaw, setTrucksRaw] = useState([]);
 
   const [resultFilters, setResultFiltersState] = useState({});
   function setResultFilters(filters) {
     setResultFiltersState(filters);
-    if (filters && Object.keys(filters).length) {
-      let newTrucks = trucks;
-      Object.entries(filters).forEach(([filterType, filter]) => {
-        newTrucks = filterTrucks({
-          trucks: newTrucks,
-          filterType,
-          filter,
-        });
+    let newTrucks = trucksRaw;
+    Object.entries(filters).forEach(([filterType, filter]) => {
+      newTrucks = filterTrucks({
+        trucks: newTrucks,
+        filterType,
+        filter,
       });
-      setTrucks(newTrucks);
-      history.push('/list');
-    }
+    });
+    setTrucks(newTrucks);
   }
 
   const [geolocation, setGeolocation] = useState({
@@ -114,6 +114,7 @@ const TruckContextProvider = ({ children, history }) => {
         });
         const data = await resp.json();
         setTrucks(data.trucks);
+        setTrucksRaw(data.trucks);
         setGeolocation({ lng: data.lng, lat: data.lat });
         setLoaded(true);
       } catch (e) {

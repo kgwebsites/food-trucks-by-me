@@ -11,6 +11,9 @@ const StyledFooter = styled.footer`
   left: 0;
   right: 0;
   padding: var(--gutter);
+  svg {
+    background: white;
+  }
 `;
 
 function Footer() {

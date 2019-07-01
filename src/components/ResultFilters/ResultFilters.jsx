@@ -1,11 +1,14 @@
 import React, { useContext, useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
+import { withRouter } from 'react-router-dom';
 import styled from 'styled-components';
 import posed from 'react-pose';
 import Modal from '../Modal';
 import { TruckContext } from '../../contexts/TruckContext';
 
 const StyledResultFilter = styled.div`
+  max-width: 800px;
+  margin: auto;
   .resultFilter {
     display: flex;
     flex-direction: column;
@@ -33,7 +36,7 @@ const PoseContainer = posed.div({
   },
 });
 
-function ResultFilters() {
+function ResultFilters({ history }) {
   const { trucks, resultFilters, setResultFilters } = useContext(TruckContext);
   const [menuItems, setMenuItems] = useState({});
   useEffect(() => {
@@ -54,8 +57,8 @@ function ResultFilters() {
   }, [trucks, setMenuItems]);
   return (
     <PoseContainer>
-      <Modal title="Result Filters">
-        <StyledResultFilter>
+      <StyledResultFilter>
+        <Modal title="Result Filters">
           {Object.entries(menuItems).map(([item, count]) => (
             <a
               className="resultFilter"
@@ -64,6 +67,7 @@ function ResultFilters() {
               onClick={e => {
                 e.preventDefault();
                 setResultFilters({ ...resultFilters, menuItem: item });
+                history.goBack();
               }}
             >
               <h3 className="mt-0">{item}</h3>
@@ -72,8 +76,8 @@ function ResultFilters() {
               </p>
             </a>
           ))}
-        </StyledResultFilter>
-      </Modal>
+        </Modal>
+      </StyledResultFilter>
     </PoseContainer>
   );
 }
@@ -82,4 +86,4 @@ ResultFilters.propTypes = {
   results: PropTypes.arrayOf(PropTypes.shape({})),
 };
 
-export default ResultFilters;
+export default withRouter(ResultFilters);

@@ -2,22 +2,41 @@ import React from 'react';
 import styled from 'styled-components';
 
 const StyledFoodTruck = styled.div`
-  max-width: 300px;
-  .title {
-    margin-top: 0;
-    margin-bottom: 0;
+  width: 100%;
+  .foodTruckLocation {
+    text-decoration: none;
+  }
+  .foodTruckHeader {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    .title {
+      margin-top: 0;
+      margin-bottom: 0;
+    }
   }
 `;
 
-const FoodTruck = ({ truck }) => (
-  <StyledFoodTruck>
-    <h2 className="title">{truck.applicant}</h2>
+const FoodTruck = ({ address = '', truck }) => (
+  <StyledFoodTruck className="FoodTruck">
     <small>
-      {truck.location}
-      <br />({truck.starttime} - {truck.endtime})
+      <a
+        className="foodTruckLocation"
+        href={`https://www.google.com/maps/dir/?api=1&origin=${address}&destination=${
+          truck.latitude
+        },${truck.longitude}`}
+      >
+        {truck.location}
+      </a>
     </small>
+    <div className="foodTruckHeader">
+      <h3 className="title">{truck.applicant}</h3>
+      <small>
+        ({truck.starttime} - {truck.endtime})
+      </small>
+    </div>
     <p>{truck.optionaltext}</p>
   </StyledFoodTruck>
 );
 
-export default FoodTruck;
+export default React.memo(FoodTruck);

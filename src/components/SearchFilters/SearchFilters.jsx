@@ -4,6 +4,7 @@ import { Link } from 'react-router-dom';
 import timeFormat from '../../utils/timeFormat';
 import { TruckContext } from '../../contexts/TruckContext';
 import Button from '../Button';
+import Chip from '../Chip';
 import Range from './Range';
 import Day from './Day';
 import Time from './Time';
@@ -36,15 +37,36 @@ const StyledSearchFilters = styled.div`
     display: ${({ noFilterActive }) => (noFilterActive ? 'none' : 'block')};
     margin-top: var(--gutter-2);
   }
+  .resultFiltersActive {
+    margin-top: var(--gutter);
+  }
 `;
 
 function SearchFilters() {
-  const { range, day, start24, end24, trucks } = useContext(TruckContext);
+  const {
+    range,
+    day,
+    start24,
+    end24,
+    trucks,
+    resultFilters,
+    setResultFilters,
+  } = useContext(TruckContext);
   const [activeFilter, setActiveFilter] = useState('');
 
   function updateFilter(filter) {
     if (activeFilter === filter) setActiveFilter('');
     else setActiveFilter(filter);
+  }
+
+  function removeResultFilter(oldFilterType) {
+    const newResultFilters = {};
+    Object.entries(resultFilters).forEach(([filterType, filter]) => {
+      if (filterType !== oldFilterType) {
+        newResultFilters[filterType] = filter;
+      }
+    });
+    setResultFilters(newResultFilters);
   }
 
   return (
@@ -83,7 +105,20 @@ function SearchFilters() {
           </Link>
         </div>
       </div>
-      <div className="resultFiltersActive" />
+      {Object.keys(resultFilters).length ? (
+        <div className="resultFiltersActive">
+          {Object.entries(resultFilters).map(([filterType, filter]) => (
+            <Chip
+              key={filterType}
+              onClose={() => removeResultFilter(filterType)}
+            >
+              {filter}
+            </Chip>
+          ))}
+        </div>
+      ) : (
+        ''
+      )}
       <div className="searchFilterActive">
         {activeFilter === 'range' && <Range />}
         {activeFilter === 'day' && <Day />}
