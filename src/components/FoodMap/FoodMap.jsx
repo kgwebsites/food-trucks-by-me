@@ -49,7 +49,7 @@ function FoodMap() {
             )}
           </Marker>
           {trucks.map(truck => {
-            const truckId = `${truck.permit}-${truck.cnn}-${truck.locationid}`;
+            const truckId = Object.values(truck).map(val => JSON.stringify(val)).join('-');
             function openTruckInfo() {
               setOpenTruck(truckId);
             }

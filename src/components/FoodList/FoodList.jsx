@@ -37,7 +37,7 @@ function FoodList({ location }) {
           <>
             {trucks.map(truck => (
               <FoodTruck
-                key={`${truck.permit}-${truck.cnn}-${truck.locationid}`}
+                key={Object.values(truck).map(val => JSON.stringify(val)).join('-')}
                 truck={truck}
                 address={address}
               />

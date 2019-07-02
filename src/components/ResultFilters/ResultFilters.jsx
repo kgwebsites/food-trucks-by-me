@@ -13,7 +13,7 @@ const StyledResultFilter = styled.div`
     display: flex;
     flex-direction: column;
     align-items: center;
-    jusitfy-content: center;
+    justify-content: center;
     box-shadow: 1px 3px 3px 2px var(--greyLight);
     color: black;
     text-decoration: none;

@@ -4,6 +4,7 @@ const { REACT_APP_GOOGLE_MAP_TOKEN } = process.env;
 function fetchLongLat(address) {
   return new Promise((res, rej) => {
     const mapsUrl = `https://maps.googleapis.com/maps/api/geocode/json?address=${address},+San+Francisco,+CA&key=${REACT_APP_GOOGLE_MAP_TOKEN}`;
+    console.log(mapsUrl);
     fetch(mapsUrl)
       .then(resp => {
         resp.json().then(data => {

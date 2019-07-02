@@ -33,7 +33,7 @@ function View({ location }) {
   return (
     <StyledView>
       <PoseGroup>
-        <RouteContainer key={location.key}>
+        <RouteContainer key={location.pathname}>
           <Switch location={location}>
             <Route
               path="/"
