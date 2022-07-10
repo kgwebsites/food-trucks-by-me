@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useCallback } from 'react';
-import { withRouter } from 'react-router-dom';
+import { useLocation } from 'react-router-dom';
 import { useCookies } from 'react-cookie';
 import filterTrucks from '../utils/filterTrucks';
 
@@ -13,21 +13,68 @@ const week = [
   'Saturday',
 ];
 
+type WeekDay =
+  | 'Sunday'
+  | 'Monday'
+  | 'Tuesday'
+  | 'Wednesday'
+  | 'Thursday'
+  | 'Friday'
+  | 'Saturday';
+
 const today = new Date();
 
-export const TruckContext = React.createContext();
+enum MapOrList {
+  map = 'map',
+  list = 'list',
+}
 
-const TruckContextProvider = ({ children, history, location }) => {
-  const [error, setError] = useState();
+type ResultFilters = { [key: string]: number | string };
+
+type Coordinates = { longitude: number; latitude: number };
+
+interface Truck {
+  optionaltext: string;
+  latitude: string;
+  longitude: string;
+}
+
+interface TruckContextType {
+  error?: string;
+  loaded?: boolean;
+  mapOrList?: MapOrList;
+  toggleMapOrList?: () => void;
+  address?: string;
+  setAddress?: (address: string) => void;
+  range?: number;
+  setRange?: (range: number) => void;
+  day?: WeekDay;
+  setDay?: (day: WeekDay) => void;
+  start24?: string;
+  setStart24?: (start24: string) => void;
+  end24?: string;
+  setEnd24?: (end24: string) => void;
+  resultFilters?: ResultFilters;
+  setResultFilters?: (resultFilter: ResultFilters) => void;
+  getFoodTrucks?: (coor?: Coordinates) => Promise<void>;
+  trucks?: Truck[];
+  geolocation?: Coordinates;
+}
+
+export const TruckContext = React.createContext<TruckContextType>({});
+
+const TruckContextProvider = ({ children }: { children: React.ReactNode }) => {
+  const [error, setError] = useState<string>();
 
   const [loaded, setLoaded] = useState(false);
 
+  let location = useLocation();
   const [mapOrList, setMapOrList] = useState(
-    location.pathname === '/' ? 'map' : 'list',
+    location.pathname === '/' ? MapOrList.map : MapOrList.list,
   );
   function toggleMapOrList() {
-    if (mapOrList === 'map') setMapOrList('list');
-    else setMapOrList('map');
+    if (mapOrList === MapOrList.map) setMapOrList(MapOrList.list);
+    else setMapOrList(MapOrList.map);
   }
 
   const [address, setAddressState] = useState(
@@ -38,9 +85,9 @@ const TruckContextProvider = ({ children, history, location }) => {
 
   const [cookies, setCookie] = useCookies(['day']);
   const [day, setDayState] = useState(
-    cookies.day ? cookies.day : week[today.getDay()],
+    cookies.day ? (cookies.day as WeekDay) : week[today.getDay()],
   );
-  function setDay(newDay) {
+  function setDay(newDay: WeekDay) {
     const end = today;
     end.setHours(23, 59, 59, 999);
     setCookie('day', newDay, { expires: end });
@@ -61,10 +108,10 @@ const TruckContextProvider = ({ children, history, location }) => {
   const [trucksRaw, setTrucksRaw] = useState([]);
 
   const [resultFilters, setResultFiltersState] = useState({});
-  function setResultFilters(filters) {
-    setResultFiltersState(filters);
+  function setResultFilters(resultFilter: ResultFilters) {
+    setResultFiltersState(resultFilter);
     let newTrucks = trucksRaw;
-    Object.entries(filters).forEach(([filterType, filter]) => {
+    Object.entries(resultFilter).forEach(([filterType, filter]) => {
       newTrucks = filterTrucks({
         trucks: newTrucks,
         filterType,
@@ -75,27 +122,27 @@ const TruckContextProvider = ({ children, history, location }) => {
   }
 
   const [geolocation, setGeolocation] = useState({
-    lng: 0,
-    lat: 0,
+    longitude: 0,
+    latitude: 0,
   });
 
-  function setAddress(address) {
+  function setAddress(address: string) {
     localStorage.setItem('address', address);
     setAddressState(address);
   }
 
-  function setStart24(start24) {
+  function setStart24(start24: string) {
     localStorage.setItem('start24', start24);
     setStart24State(start24);
   }
 
-  function setEnd24(end24) {
+  function setEnd24(end24: string) {
     localStorage.setItem('end24', end24);
     setEnd24State(end24);
   }
 
   const getFoodTrucks = useCallback(
-    async coor => {
+    async (coor?: Coordinates) => {
       setLoaded(false);
       try {
         const resp = await fetch(`${window.API_ROOT}/get_food_trucks`, {
@@ -115,10 +162,10 @@ const TruckContextProvider = ({ children, history, location }) => {
         const data = await resp.json();
         setTrucks(data.trucks);
         setTrucksRaw(data.trucks);
-        setGeolocation({ lng: data.lng, lat: data.lat });
+        setGeolocation({ longitude: data.lng, latitude: data.lat });
         setLoaded(true);
       } catch (e) {
-        setError(e);
+        setError(e as string);
       }
     },
     [address, range, day, start24, end24],
@@ -160,7 +207,7 @@ const TruckContextProvider = ({ children, history, location }) => {
         setAddress,
         range,
         setRange,
-        day,
+        day: day as WeekDay,
         setDay,
         start24,
         setStart24,
@@ -178,4 +225,4 @@ const TruckContextProvider = ({ children, history, location }) => {
   );
 };
 
-export default withRouter(TruckContextProvider);
+export default TruckContextProvider;

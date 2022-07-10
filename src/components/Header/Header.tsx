@@ -1,7 +1,6 @@
-import React, { useContext } from 'react';
-import PropTypes from 'prop-types';
+import React, { FormEvent, useContext } from 'react';
 import styled from 'styled-components';
-import { Link, withRouter } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import Address from '../SearchFilters/Address';
 import SearchFilters from '../SearchFilters/SearchFilters';
 import { TruckContext } from '../../contexts/TruckContext';
@@ -32,13 +31,12 @@ const StyledHeader = styled.form`
 `;
 
 function Header() {
-  const { getFoodTrucks, mapOrList, toggleMapOrList } = useContext(
-    TruckContext,
-  );
+  const { getFoodTrucks, mapOrList, toggleMapOrList } =
+    useContext(TruckContext);
 
-  function onSubmit(e) {
+  function onSubmit(e: FormEvent) {
     e.preventDefault();
-    getFoodTrucks();
+    if (getFoodTrucks) getFoodTrucks();
   }
 
   return (
@@ -58,10 +56,4 @@ function Header() {
   );
 }
 
-Header.propTypes = {
-  location: PropTypes.shape({
-    pathname: PropTypes.string,
-  }),
-};
-
-export default withRouter(Header);
+export default Header;

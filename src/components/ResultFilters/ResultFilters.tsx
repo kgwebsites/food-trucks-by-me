@@ -1,6 +1,5 @@
 import React, { useContext, useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
-import { withRouter } from 'react-router-dom';
 import styled from 'styled-components';
 import posed from 'react-pose';
 import Modal from '../Modal';
@@ -36,14 +35,15 @@ const PoseContainer = posed.div({
   },
 });
 
-function ResultFilters({ history }) {
+function ResultFilters() {
+  const history = window.history;
   const { trucks, resultFilters, setResultFilters } = useContext(TruckContext);
   const [menuItems, setMenuItems] = useState({});
   useEffect(() => {
-    const menuItemsMap = {};
-    trucks.forEach(truck => {
+    const menuItemsMap: {[key:string]: number} = {};
+    trucks?.forEach(truck => {
       const menuItems = truck.optionaltext.split(',');
-      const truckUniqueItems = {};
+      const truckUniqueItems: {[key: string]: boolean} = {};
       menuItems.forEach(itemRaw => {
         const item = itemRaw.trim();
         if (!truckUniqueItems[item]) {
@@ -66,13 +66,15 @@ function ResultFilters({ history }) {
               href="/list"
               onClick={e => {
                 e.preventDefault();
-                setResultFilters({ ...resultFilters, menuItem: item });
-                history.goBack();
+                if (setResultFilters) setResultFilters({ ...resultFilters, menuItem: item });
+                history.back();
               }}
             >
               <h3 className="mt-0">{item}</h3>
               <p className="mt-0">
-                {count} Truck{count > 1 ? 's' : ''}
+                <>
+                  {count} Truck{count as number > 1 ? 's' : ''}
+                </>
               </p>
             </a>
           ))}
@@ -86,4 +88,4 @@ ResultFilters.propTypes = {
   results: PropTypes.arrayOf(PropTypes.shape({})),
 };
 
-export default withRouter(ResultFilters);
+export default ResultFilters;

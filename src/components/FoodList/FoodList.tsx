@@ -23,7 +23,7 @@ const PoseContainer = posed.div({
   enter: { staggerChildren: 50 },
 });
 
-function FoodList({ location }) {
+function FoodList() {
   const { trucks, address, error, loaded } = useContext(TruckContext);
 
   if (error) return null;
@@ -35,14 +35,14 @@ function FoodList({ location }) {
           <Loading />
         ) : (
           <>
-            {trucks.map(truck => (
+            {trucks?.map(truck => (
               <FoodTruck
                 key={Object.values(truck).map(val => JSON.stringify(val)).join('-')}
                 truck={truck}
                 address={address}
               />
             ))}
-            {!trucks.length && <h2 className="mt-0">No Food Trucks Found</h2>}
+            {!trucks?.length && <h2 className="mt-0">No Food Trucks Found</h2>}
           </>
         )}
       </StyledFoodList>
