@@ -10,9 +10,11 @@ import {
 import { TruckContext } from '../../contexts/TruckContext';
 import FoodTruck from '../FoodList/FoodTruck';
 import FoodTruckIcon from '../../assets/food-truck.svg';
+import Loading from '../Loading';
 
 const StyledFoodMap = styled.div`
   margin-bottom: 24px;
+  position: relative;
   .gm-style-iw.gm-style-iw-c {
     min-height: 40px;
     min-width: 105px;
@@ -36,10 +38,11 @@ function FoodMap() {
     setOpenTruck('');
   }
 
-  if (!loaded || error || !geolocation) return null;
+  if (error || !geolocation) return null;
 
   return (
     <StyledFoodMap>
+      {!loaded ? <Loading /> : null}
       <PoseContainer>
         <LoadScript
           googleMapsApiKey={process.env.REACT_APP_GOOGLE_MAP_TOKEN as string}

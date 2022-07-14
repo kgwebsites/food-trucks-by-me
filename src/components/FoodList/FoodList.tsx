@@ -13,6 +13,7 @@ const StyledFoodList = styled.div`
   padding: 0 var(--gutter);
   max-width: 800px;
   margin: auto;
+  position: relative;
   .FoodTruck {
     border-bottom: 1px solid var(--greyLight);
     margin-bottom: var(--gutter-2);
@@ -35,9 +36,11 @@ function FoodList() {
           <Loading />
         ) : (
           <>
-            {trucks?.map(truck => (
+            {trucks?.map((truck) => (
               <FoodTruck
-                key={Object.values(truck).map(val => JSON.stringify(val)).join('-')}
+                key={Object.values(truck)
+                  .map((val) => JSON.stringify(val))
+                  .join('-')}
                 truck={truck}
                 address={address}
               />

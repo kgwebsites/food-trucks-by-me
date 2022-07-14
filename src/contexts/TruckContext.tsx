@@ -1,5 +1,4 @@
 import React, { useState, useEffect, useCallback } from 'react';
-import { useLocation } from 'react-router-dom';
 import { useCookies } from 'react-cookie';
 import filterTrucks from '../utils/filterTrucks';
 
@@ -24,11 +23,6 @@ type WeekDay =
 
 const today = new Date();
 
-enum MapOrList {
-  map = 'map',
-  list = 'list',
-}
-
 type ResultFilters = { [key: string]: number | string };
 
 type Coordinates = { longitude: number; latitude: number };
@@ -42,18 +36,14 @@ interface Truck {
 interface TruckContextType {
   error?: string;
   loaded?: boolean;
-  mapOrList?: MapOrList;
-  toggleMapOrList?: () => void;
   address?: string;
   setAddress?: (address: string) => void;
   range?: number;
   setRange?: (range: number) => void;
   day?: WeekDay;
   setDay?: (day: WeekDay) => void;
-  start24?: string;
-  setStart24?: (start24: string) => void;
-  end24?: string;
-  setEnd24?: (end24: string) => void;
+  openNow?: boolean;
+  setOpenNow?: (openNow: boolean) => void;
   resultFilters?: ResultFilters;
   setResultFilters?: (resultFilter: ResultFilters) => void;
   getFoodTrucks?: (coor?: Coordinates) => Promise<void>;
@@ -67,15 +57,6 @@ const TruckContextProvider = ({ children }: { children: React.ReactNode }) => {
   const [error, setError] = useState<string>();
 
   const [loaded, setLoaded] = useState(false);
-
-  let location = useLocation();
-  const [mapOrList, setMapOrList] = useState(
-    location.pathname === '/' ? MapOrList.map : MapOrList.list,
-  );
-  function toggleMapOrList() {
-    if (mapOrList === MapOrList.map) setMapOrList(MapOrList.list);
-    else setMapOrList(MapOrList.map);
-  }
 
   const [address, setAddressState] = useState(
     localStorage.getItem('address') || '353 sacramento st',
@@ -94,14 +75,8 @@ const TruckContextProvider = ({ children }: { children: React.ReactNode }) => {
     setDayState(newDay);
   }
 
-  const [start24, setStart24State] = useState(
-    localStorage.getItem('start24') ||
-      `${new Date().getHours()}:${new Date().getMinutes()}`,
-  );
-
-  const [end24, setEnd24State] = useState(
-    localStorage.getItem('end24') ||
-      `${new Date().getHours() + 1}:${new Date().getMinutes()}`,
+  const [openNow, setOpenNowState] = useState(
+    localStorage.getItem('openNow') === 'false' ? false : true,
   );
 
   const [trucks, setTrucks] = useState([]);
@@ -131,14 +106,9 @@ const TruckContextProvider = ({ children }: { children: React.ReactNode }) => {
     setAddressState(address);
   }
 
-  function setStart24(start24: string) {
-    localStorage.setItem('start24', start24);
-    setStart24State(start24);
-  }
-
-  function setEnd24(end24: string) {
-    localStorage.setItem('end24', end24);
-    setEnd24State(end24);
+  function setOpenNow(openNow: boolean) {
+    localStorage.setItem('openNow', `${openNow}`);
+    setOpenNowState(openNow);
   }
 
   const getFoodTrucks = useCallback(
@@ -155,8 +125,11 @@ const TruckContextProvider = ({ children }: { children: React.ReactNode }) => {
             coor,
             range,
             day,
-            start24,
-            end24,
+            openNow,
+            currentHour: new Date().toLocaleTimeString([], {
+              hour: 'numeric',
+              hour12: false,
+            }),
           }),
         });
         const data = await resp.json();
@@ -168,7 +141,7 @@ const TruckContextProvider = ({ children }: { children: React.ReactNode }) => {
         setError(e as string);
       }
     },
-    [address, range, day, start24, end24],
+    [address, range, day, openNow],
   );
 
   useEffect(() => {
@@ -201,18 +174,14 @@ const TruckContextProvider = ({ children }: { children: React.ReactNode }) => {
       value={{
         error,
         loaded,
-        mapOrList,
-        toggleMapOrList,
         address,
         setAddress,
         range,
         setRange,
         day: day as WeekDay,
         setDay,
-        start24,
-        setStart24,
-        end24,
-        setEnd24,
+        openNow,
+        setOpenNow,
         resultFilters,
         setResultFilters,
         getFoodTrucks,

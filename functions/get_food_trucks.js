@@ -1,8 +1,10 @@
 const fetchLongLat = require('./core/fetchLongLat');
 const filterFoodTrucks = require('./core/filterFoodTrucks');
 
-exports.handler = async function(event, context, callback) {
-  const { address, coor, range, day, start24, end24 } = JSON.parse(event.body);
+exports.handler = async function (event, context, callback) {
+  const { address, coor, range, day, openNow, currentHour } = JSON.parse(
+    event.body,
+  );
   try {
     let lat, lng;
     if (coor) {
@@ -17,8 +19,8 @@ exports.handler = async function(event, context, callback) {
         lat,
         range,
         day,
-        start24,
-        end24,
+        openNow,
+        currentHour,
       });
       try {
         callback(null, {

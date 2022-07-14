@@ -1,6 +1,6 @@
 import React, { FormEvent, useContext } from 'react';
 import styled from 'styled-components';
-import { Link } from 'react-router-dom';
+import { useLocation } from 'react-router-dom';
 import Address from '../SearchFilters/Address';
 import SearchFilters from '../SearchFilters/SearchFilters';
 import { TruckContext } from '../../contexts/TruckContext';
@@ -31,8 +31,8 @@ const StyledHeader = styled.form`
 `;
 
 function Header() {
-  const { getFoodTrucks, mapOrList, toggleMapOrList } =
-    useContext(TruckContext);
+  const location = useLocation();
+  const { getFoodTrucks } = useContext(TruckContext);
 
   function onSubmit(e: FormEvent) {
     e.preventDefault();
@@ -42,13 +42,12 @@ function Header() {
   return (
     <StyledHeader onSubmit={onSubmit}>
       <div className="searchRow">
-        <Link
-          to={mapOrList === 'map' ? '/list' : '/'}
-          onClick={toggleMapOrList}
+        <a
+          href={location.pathname === '/' ? '/list' : '/'}
           className="listMapLink"
         >
-          {mapOrList === 'map' ? 'List' : 'Map'}
-        </Link>
+          {location.pathname === '/' ? 'List' : 'Map'}
+        </a>
         <Address className="headerInput" />
       </div>
       <SearchFilters />

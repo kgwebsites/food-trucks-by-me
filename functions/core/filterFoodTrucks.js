@@ -1,6 +1,6 @@
 const fetch = require('node-fetch');
 
-function filterFoodTrucks({ lng, lat, range, day, start24, end24 }) {
+function filterFoodTrucks({ lng, lat, range, day, openNow, currentHour }) {
   const latDeg = 69.172;
   const degToRad = 0.0174533;
 
@@ -18,13 +18,15 @@ function filterFoodTrucks({ lng, lat, range, day, start24, end24 }) {
   const endLng = lng + lngDisparity;
 
   const dowSoQL = `dayofweekstr = '${day}'`;
-  const start24SoQL = `start24 < '${start24}'`;
-  const end24SoQL = `end24 > '${end24}'`;
+  const start24SoQL = `start24 <= '${currentHour}'`;
+  const end24SoQL = `end24 >= '${currentHour}'`;
   const latSoQL = `latitude between ${startLat} and ${endLat}`;
   const lngSoQL = `longitude between ${startLng} and ${endLng}`;
 
   const url = encodeURI(
-    `https://data.sfgov.org/resource/jjew-r69b.json?$where= ${dowSoQL} AND ${start24SoQL} AND ${end24SoQL} AND ${latSoQL} AND ${lngSoQL}`,
+    `https://data.sfgov.org/resource/jjew-r69b.json?$where= ${dowSoQL} ${
+      openNow ? `AND ${start24SoQL} AND ${end24SoQL}` : ''
+    } AND ${latSoQL} AND ${lngSoQL}`,
   );
   const { REACT_APP_SFGOV_TOKEN } = process.env;
 
@@ -32,8 +34,8 @@ function filterFoodTrucks({ lng, lat, range, day, start24, end24 }) {
     fetch(url, {
       headers: { 'X-App-Token': REACT_APP_SFGOV_TOKEN },
     })
-      .then(data => data.json().then(response => res(response)))
-      .catch(err => rej(err));
+      .then((data) => data.json().then((response) => res(response)))
+      .catch((err) => rej(err));
   });
 }
 

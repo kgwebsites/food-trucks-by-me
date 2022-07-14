@@ -23,11 +23,14 @@ function Day({ className }) {
   const { day, setDay } = useContext(TruckContext);
   return (
     <StyledDay className={className}>
-      <Select
-        value={days.find(d => d.value === day)}
-        onChange={newDay => setDay(newDay.value)}
-        options={days}
-      />
+      <label>
+        Day
+        <Select
+          value={days.find((d) => d.value === day)}
+          onChange={(newDay) => setDay(newDay.value)}
+          options={days}
+        />
+      </label>
     </StyledDay>
   );
 }

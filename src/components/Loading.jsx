@@ -7,6 +7,9 @@ const StyledLoading = styled.div`
   justify-content: center;
   align-items: center;
   width: 100%;
+  position: absolute;
+  z-index: 10;
+  top: 0;
 `;
 
 function Loading() {

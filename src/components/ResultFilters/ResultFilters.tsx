@@ -2,7 +2,6 @@ import React, { useContext, useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
 import posed from 'react-pose';
-import Modal from '../Modal';
 import { TruckContext } from '../../contexts/TruckContext';
 
 const StyledResultFilter = styled.div`
@@ -40,11 +39,11 @@ function ResultFilters() {
   const { trucks, resultFilters, setResultFilters } = useContext(TruckContext);
   const [menuItems, setMenuItems] = useState({});
   useEffect(() => {
-    const menuItemsMap: {[key:string]: number} = {};
-    trucks?.forEach(truck => {
+    const menuItemsMap: { [key: string]: number } = {};
+    trucks?.forEach((truck) => {
       const menuItems = truck.optionaltext.split(',');
-      const truckUniqueItems: {[key: string]: boolean} = {};
-      menuItems.forEach(itemRaw => {
+      const truckUniqueItems: { [key: string]: boolean } = {};
+      menuItems.forEach((itemRaw) => {
         const item = itemRaw.trim();
         if (!truckUniqueItems[item]) {
           menuItemsMap[item] =
@@ -58,27 +57,26 @@ function ResultFilters() {
   return (
     <PoseContainer>
       <StyledResultFilter>
-        <Modal title="Result Filters">
-          {Object.entries(menuItems).map(([item, count]) => (
-            <a
-              className="resultFilter"
-              key={item}
-              href="/list"
-              onClick={e => {
-                e.preventDefault();
-                if (setResultFilters) setResultFilters({ ...resultFilters, menuItem: item });
-                history.back();
-              }}
-            >
-              <h3 className="mt-0">{item}</h3>
-              <p className="mt-0">
-                <>
-                  {count} Truck{count as number > 1 ? 's' : ''}
-                </>
-              </p>
-            </a>
-          ))}
-        </Modal>
+        {Object.entries(menuItems).map(([item, count]) => (
+          <a
+            className="resultFilter"
+            key={item}
+            href="/list"
+            onClick={(e) => {
+              e.preventDefault();
+              if (setResultFilters)
+                setResultFilters({ ...resultFilters, menuItem: item });
+              history.back();
+            }}
+          >
+            <h3 className="mt-0">{item}</h3>
+            <p className="mt-0">
+              <>
+                {count} Truck{(count as number) > 1 ? 's' : ''}
+              </>
+            </p>
+          </a>
+        ))}
       </StyledResultFilter>
     </PoseContainer>
   );

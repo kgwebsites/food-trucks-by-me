@@ -13,7 +13,7 @@ app.use(cors());
 app.use(express.urlencoded({ extended: true })); // for parsing application/x-www-form-urlencoded
 
 async function getFoodTrucks(req, res) {
-  const { address, coor, range, day, start24, end24 } = req.body;
+  const { address, coor, range, day, openNow, currentHour } = req.body;
   let lat, lng;
   if (coor) {
     lat = coor.latitude;
@@ -27,8 +27,8 @@ async function getFoodTrucks(req, res) {
       lat,
       range,
       day,
-      start24,
-      end24,
+      openNow,
+      currentHour,
     });
     res.json({ trucks: response, lng, lat });
   } else res.json({ error: 'Invalid address' });
