@@ -1,6 +1,5 @@
 import React from 'react';
 import styled from 'styled-components';
-import { BrowserRouter as Router } from 'react-router-dom';
 import { CookiesProvider } from 'react-cookie';
 import Header from './components/Header/Header';
 import Footer from './components/Footer';
@@ -24,14 +23,12 @@ function App() {
   return (
     <StyledApp className="App">
       <CookiesProvider>
-        <Router>
-          <TruckContextProvider>
-            <Header />
-            <View />
-            <Error />
-          </TruckContextProvider>
-          <Footer />
-        </Router>
+        <TruckContextProvider>
+          <Header />
+          <View />
+          <Error />
+        </TruckContextProvider>
+        <Footer />
       </CookiesProvider>
     </StyledApp>
   );

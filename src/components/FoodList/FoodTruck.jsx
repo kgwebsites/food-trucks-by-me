@@ -1,5 +1,6 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import styled from 'styled-components';
+import { TruckContext } from '../../contexts/TruckContext';
 
 const StyledFoodTruck = styled.div`
   width: 100%;
@@ -17,26 +18,32 @@ const StyledFoodTruck = styled.div`
   }
 `;
 
-const FoodTruck = ({ address = '', truck }) => (
-  <StyledFoodTruck className="FoodTruck">
-    <small>
-      <a
-        className="foodTruckLocation"
-        href={`https://www.google.com/maps/dir/?api=1&origin=${address}&destination=${
-          truck.latitude
-        },${truck.longitude}`}
-      >
-        {truck.location}
-      </a>
-    </small>
-    <div className="foodTruckHeader">
-      <h3 className="title">{truck.applicant}</h3>
+const FoodTruck = ({ address = '', truck }) => {
+  const { setSearchAddress } = useContext(TruckContext);
+  return (
+    <StyledFoodTruck className="FoodTruck">
       <small>
-        ({truck.starttime} - {truck.endtime})
+        <a
+          className="foodTruckLocation"
+          href={`/${address}`}
+          onClick={(e) => {
+            e.preventDefault();
+            setSearchAddress(truck.location);
+            window.dispatchEvent(new CustomEvent('ModalClose'));
+          }}
+        >
+          {truck.location}
+        </a>
       </small>
-    </div>
-    <p>{truck.optionaltext}</p>
-  </StyledFoodTruck>
-);
+      <div className="foodTruckHeader">
+        <h3 className="title">{truck.applicant}</h3>
+        <small>
+          ({truck.starttime} - {truck.endtime})
+        </small>
+      </div>
+      <p>{truck.optionaltext}</p>
+    </StyledFoodTruck>
+  );
+};
 
 export default React.memo(FoodTruck);

@@ -14,14 +14,17 @@ const StyledAddress = styled.div`
 `;
 
 function Address({ className }) {
-  const { address, setAddress } = useContext(TruckContext);
+  const { address, setAddress, searchAddress, setSearchAddress } =
+    useContext(TruckContext);
   return (
     <StyledAddress className={className}>
       <Input
         type="text"
-        value={address}
+        value={searchAddress || address}
         placeholder="353 Sacramento St"
-        onChange={e => setAddress(e.target.value)}
+        onChange={(e) => setSearchAddress(e.target.value)}
+        onBlur={() => setAddress(searchAddress)}
+        tabIndex={0}
         inputIcon={
           <button className="submitButton" type="submit">
             <FoodTruckIcon />

@@ -27,10 +27,11 @@ type ResultFilters = { [key: string]: number | string };
 
 type Coordinates = { longitude: number; latitude: number };
 
-interface Truck {
+export interface Truck {
   optionaltext: string;
   latitude: string;
   longitude: string;
+  location: string;
 }
 
 interface TruckContextType {
@@ -38,6 +39,8 @@ interface TruckContextType {
   loaded?: boolean;
   address?: string;
   setAddress?: (address: string) => void;
+  searchAddress?: string;
+  setSearchAddress?: (searchAddress: string) => void;
   range?: number;
   setRange?: (range: number) => void;
   day?: WeekDay;
@@ -61,6 +64,7 @@ const TruckContextProvider = ({ children }: { children: React.ReactNode }) => {
   const [address, setAddressState] = useState(
     localStorage.getItem('address') || '353 sacramento st',
   );
+  const [searchAddress, setSearchAddress] = useState(address);
 
   const [range, setRange] = useState(0.25);
 
@@ -176,6 +180,8 @@ const TruckContextProvider = ({ children }: { children: React.ReactNode }) => {
         loaded,
         address,
         setAddress,
+        searchAddress,
+        setSearchAddress,
         range,
         setRange,
         day: day as WeekDay,

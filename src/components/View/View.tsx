@@ -1,11 +1,7 @@
 import React from 'react';
-import { Route, Routes, useLocation } from 'react-router-dom';
 import posed, { PoseGroup } from 'react-pose';
 import styled from 'styled-components';
 import FoodMap from '../FoodMap/FoodMap';
-import FoodList from '../FoodList/FoodList';
-import ResultFilters from '../ResultFilters/ResultFilters';
-import Settings from '../Settings/Settings';
 
 const StyledView = styled.div`
   .fade {
@@ -30,17 +26,11 @@ const RouteContainer = posed.div({
 });
 
 function View() {
-  const location = useLocation();
   return (
     <StyledView>
       <PoseGroup>
-        <RouteContainer key={location.pathname}>
-          <Routes location={location}>
-            <Route path="/list" element={<FoodList />} />
-            <Route path="/filter" element={<ResultFilters />} />
-            <Route path="/settings" element={<Settings />} />
-            <Route path="/" element={<FoodMap />} />
-          </Routes>
+        <RouteContainer key="routes">
+          <FoodMap />
         </RouteContainer>
       </PoseGroup>
     </StyledView>

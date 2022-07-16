@@ -1,15 +1,19 @@
-import React, { FormEvent, useContext } from 'react';
+import React, { useRef } from 'react';
 import styled from 'styled-components';
-import { useLocation } from 'react-router-dom';
+import Modal from '../Modal';
 import Address from '../SearchFilters/Address';
 import SearchFilters from '../SearchFilters/SearchFilters';
-import { TruckContext } from '../../contexts/TruckContext';
+import Button, { ButtonStyle } from '../Button';
+import FoodList from '../FoodList/FoodList';
 
 const StyledHeader = styled.form`
   padding: var(--gutter);
   max-width: 800px;
   margin: auto;
   margin-bottom: var(--gutter-2);
+  Button {
+    width: 44px;
+  }
   .searchRow {
     display: flex;
     align-items: center;
@@ -31,26 +35,44 @@ const StyledHeader = styled.form`
 `;
 
 function Header() {
-  const location = useLocation();
-  const { getFoodTrucks } = useContext(TruckContext);
-
-  function onSubmit(e: FormEvent) {
-    e.preventDefault();
-    if (getFoodTrucks) getFoodTrucks();
-  }
+  const listModal = useRef<HTMLDialogElement>(null);
 
   return (
-    <StyledHeader onSubmit={onSubmit}>
+    <StyledHeader
+      onSubmit={(e) => {
+        e.preventDefault();
+      }}
+    >
       <div className="searchRow">
-        <a
-          href={location.pathname === '/' ? '/list' : '/'}
+        <Button
           className="listMapLink"
+          type={ButtonStyle.button}
+          onClick={() => {
+            // @ts-ignore
+            listModal.current?.showModal();
+          }}
         >
-          {location.pathname === '/' ? 'List' : 'Map'}
-        </a>
+          List
+        </Button>
         <Address className="headerInput" />
       </div>
       <SearchFilters />
+      <Modal ref={listModal}>
+        <div className="searchRow">
+          <Button
+            className="listMapLink"
+            onClick={() => {
+              // @ts-ignore
+              listModal.current?.close();
+            }}
+            type={ButtonStyle.button}
+          >
+            Map
+          </Button>
+          <Address className="headerInput" />
+        </div>
+        <FoodList />
+      </Modal>
     </StyledHeader>
   );
 }

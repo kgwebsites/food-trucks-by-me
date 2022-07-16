@@ -1,4 +1,4 @@
-import React, { useContext, useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import styled from 'styled-components';
 import posed from 'react-pose';
 import {
@@ -7,7 +7,7 @@ import {
   Marker,
   InfoWindow,
 } from '@react-google-maps/api';
-import { TruckContext } from '../../contexts/TruckContext';
+import { Truck, TruckContext } from '../../contexts/TruckContext';
 import FoodTruck from '../FoodList/FoodTruck';
 import FoodTruckIcon from '../../assets/food-truck.svg';
 import Loading from '../Loading';
@@ -28,11 +28,27 @@ const PoseContainer = posed.div({
   enter: { staggerChildren: 50 },
 });
 
+function getNormalizedTruckId(truck: Truck) {
+  return Object.values(truck)
+    .map((val) => JSON.stringify(val))
+    .join('-');
+}
+
 function FoodMap() {
-  const { trucks, address, geolocation, error, loaded } =
+  const { trucks, address, searchAddress, geolocation, error, loaded } =
     useContext(TruckContext);
 
-  const [openTruck, setOpenTruck] = useState('yourLocation');
+  const truckAtSearchAddress = trucks?.find(
+    (truck) => truck.location === searchAddress,
+  );
+
+  const [openTruck, setOpenTruck] = useState('');
+
+  useEffect(() => {
+    if (trucks?.length && searchAddress && truckAtSearchAddress) {
+      setOpenTruck(getNormalizedTruckId(truckAtSearchAddress));
+    }
+  }, [trucks, searchAddress, truckAtSearchAddress, setOpenTruck]);
 
   function closeTruckInfo() {
     setOpenTruck('');
@@ -50,35 +66,19 @@ function FoodMap() {
           <GoogleMap
             zoom={15}
             mapContainerClassName="map-container"
-            center={{ lat: geolocation.latitude, lng: geolocation.longitude }}
+            center={
+              truckAtSearchAddress
+                ? {
+                    lat: parseFloat(truckAtSearchAddress.latitude),
+                    lng: parseFloat(truckAtSearchAddress.longitude),
+                  }
+                : { lat: geolocation.latitude, lng: geolocation.longitude }
+            }
           >
             <>
-              <Marker
-                position={{
-                  lat: geolocation.latitude,
-                  lng: geolocation.longitude,
-                }}
-                onClick={() => setOpenTruck('yourLocation')}
-              >
-                {openTruck === 'yourLocation' && (
-                  <InfoWindow
-                    onCloseClick={closeTruckInfo}
-                    position={{
-                      lat: geolocation.latitude,
-                      lng: geolocation.longitude,
-                    }}
-                  >
-                    <div>Your location</div>
-                  </InfoWindow>
-                )}
-              </Marker>
               {trucks?.map((truck) => {
-                const truckId = Object.values(truck)
-                  .map((val) => JSON.stringify(val))
-                  .join('-');
-                function openTruckInfo() {
-                  setOpenTruck(truckId);
-                }
+                const truckId = getNormalizedTruckId(truck);
+
                 return (
                   <Marker
                     key={truckId}
@@ -87,7 +87,7 @@ function FoodMap() {
                       lng: parseFloat(truck.longitude),
                     }}
                     icon={FoodTruckIcon}
-                    onClick={openTruckInfo}
+                    onClick={() => setOpenTruck(truckId)}
                   >
                     {openTruck === truckId && (
                       <InfoWindow
