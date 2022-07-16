@@ -8,8 +8,10 @@ import TruckContextProvider from './contexts/TruckContext';
 import Error from './components/Error';
 
 const StyledApp = styled.main`
-  min-height: 100vh;
+  height: 100vh;
   overflow: hidden;
+  display: flex;
+  flex-direction: column;
   .title {
     margin-top: 0;
     margin-bottom: 0;

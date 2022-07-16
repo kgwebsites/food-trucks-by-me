@@ -13,11 +13,12 @@ import FoodTruckIcon from '../../assets/food-truck.svg';
 import Loading from '../Loading';
 
 const StyledFoodMap = styled.div`
-  margin-bottom: 24px;
   position: relative;
+  // Food Truck InfoWindow on map
   .gm-style-iw.gm-style-iw-c {
     min-height: 40px;
-    min-width: 105px;
+    min-width: 105px !important;
+    padding-top: 0;
   }
   .map-container {
     height: 400px;
@@ -35,8 +36,15 @@ function getNormalizedTruckId(truck: Truck) {
 }
 
 function FoodMap() {
-  const { trucks, address, searchAddress, geolocation, error, loaded } =
-    useContext(TruckContext);
+  const {
+    trucks,
+    address,
+    searchAddress,
+    setSearchAddress,
+    geolocation,
+    error,
+    loaded,
+  } = useContext(TruckContext);
 
   const truckAtSearchAddress = trucks?.find(
     (truck) => truck.location === searchAddress,
@@ -87,7 +95,10 @@ function FoodMap() {
                       lng: parseFloat(truck.longitude),
                     }}
                     icon={FoodTruckIcon}
-                    onClick={() => setOpenTruck(truckId)}
+                    onClick={() => {
+                      setOpenTruck(truckId);
+                      setSearchAddress && setSearchAddress(truck.location);
+                    }}
                   >
                     {openTruck === truckId && (
                       <InfoWindow
