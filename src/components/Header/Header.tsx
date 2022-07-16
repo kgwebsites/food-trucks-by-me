@@ -1,5 +1,6 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import styled from 'styled-components';
+import { TruckContext } from '../../contexts/TruckContext';
 import Address from '../SearchFilters/Address';
 import SearchFilters from '../SearchFilters/SearchFilters';
 
@@ -27,10 +28,12 @@ const StyledHeader = styled.form`
 `;
 
 function Header() {
+  const { setAddress, searchAddress } = useContext(TruckContext);
   return (
     <StyledHeader
       onSubmit={(e) => {
         e.preventDefault();
+        setAddress && searchAddress && setAddress(searchAddress);
       }}
     >
       <div className="searchRow">

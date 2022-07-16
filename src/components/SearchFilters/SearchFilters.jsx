@@ -46,7 +46,7 @@ function SearchFilters() {
   }
 
   return (
-    <StyledSearchFilters trucksLoaded={trucks.length}>
+    <StyledSearchFilters trucksLoaded={trucks?.length}>
       <div className="searchFilters">
         <div className="filtersLeft">
           <Radius />

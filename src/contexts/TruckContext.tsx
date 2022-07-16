@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useCallback } from 'react';
+import React, { useState, useEffect, useCallback, useRef } from 'react';
 import { useCookies } from 'react-cookie';
 import filterTrucks from '../utils/filterTrucks';
 
@@ -57,6 +57,13 @@ interface TruckContextType {
 export const TruckContext = React.createContext<TruckContextType>({});
 
 const TruckContextProvider = ({ children }: { children: React.ReactNode }) => {
+  let preventDuplicateFetch = useRef(false);
+  let initialLoad = useRef(localStorage.getItem('initialLoad') || 'true');
+  const setInitialLoad = () => {
+    localStorage.setItem('initialLoad', 'false');
+    initialLoad.current = 'false';
+  };
+
   const [error, setError] = useState<string>();
 
   const [loaded, setLoaded] = useState(false);
@@ -117,26 +124,68 @@ const TruckContextProvider = ({ children }: { children: React.ReactNode }) => {
 
   const getFoodTrucks = useCallback(
     async (coor?: Coordinates) => {
+      if (preventDuplicateFetch.current === true) {
+        preventDuplicateFetch.current = false;
+        return;
+      }
       setLoaded(false);
-      try {
-        const resp = await fetch(`${window.API_ROOT}/get_food_trucks`, {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json',
-          },
-          body: JSON.stringify({
-            address,
-            coor,
-            range,
-            day,
-            openNow,
-            currentHour: new Date().toLocaleTimeString([], {
-              hour: 'numeric',
-              hour12: false,
+      const dataPromises = [];
+      dataPromises.push(
+        new Promise(async (res) => {
+          const resp = await fetch(`${window.API_ROOT}/get_food_trucks`, {
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({
+              address,
+              coor: coor
+                ? { latitude: coor?.latitude, longitude: coor?.longitude }
+                : undefined,
+              range,
+              day,
+              openNow,
+              currentHour: new Date().toLocaleTimeString([], {
+                hour: 'numeric',
+                hour12: false,
+              }),
             }),
+          });
+          const data = await resp.json();
+          res(data);
+        }),
+      );
+
+      if (coor) {
+        dataPromises.push(
+          new Promise(async (res) => {
+            const resp = await fetch(
+              `${window.API_ROOT}/get_address_from_coor`,
+              {
+                method: 'POST',
+                headers: {
+                  'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({
+                  lng: coor.longitude,
+                  lat: coor.latitude,
+                }),
+              },
+            );
+            const data = await resp.json();
+            res(data);
           }),
-        });
-        const data = await resp.json();
+        );
+      }
+      try {
+        const allData: any = await Promise.all(dataPromises);
+        const [data, addressData = undefined] = allData;
+
+        if (addressData?.address) {
+          preventDuplicateFetch.current = true;
+          setSearchAddress(addressData.address);
+          setAddress(addressData.address);
+        }
         setTrucks(data.trucks);
         setTrucksRaw(data.trucks);
         setGeolocation({ longitude: data.lng, latitude: data.lat });
@@ -149,28 +198,12 @@ const TruckContextProvider = ({ children }: { children: React.ReactNode }) => {
   );
 
   useEffect(() => {
-    // if ('geolocation' in navigator) {
-    //   navigator.geolocation.getCurrentPosition(async function(position) {
-    //     getFoodTrucks(position.coords);
-    //     try {
-    //       const resp = await fetch(`${window.API_ROOT}/get_address_from_coor`, {
-    //         method: 'POST',
-    //         headers: {
-    //           'Content-Type': 'application/json',
-    //         },
-    //         body: JSON.stringify({
-    //           lng: position.coords.longitude,
-    //           lat: position.coords.latitude,
-    //         }),
-    //       });
-    //       const data = await resp.json();
-    //       setAddress(data.address);
-    //     } catch (e) {
-    //       setError(e);
-    //     }
-    //   });
-    // } else
-    getFoodTrucks();
+    if ('geolocation' in navigator && initialLoad.current === 'true') {
+      navigator.geolocation.getCurrentPosition(async function (position) {
+        getFoodTrucks(position.coords);
+      });
+    } else getFoodTrucks();
+    setInitialLoad();
   }, [getFoodTrucks]);
 
   return (

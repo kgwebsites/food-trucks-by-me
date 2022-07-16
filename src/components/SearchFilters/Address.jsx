@@ -20,10 +20,9 @@ function Address({ className }) {
     <StyledAddress className={className}>
       <Input
         type="text"
-        value={searchAddress || address}
+        value={searchAddress}
         placeholder="415 Mission St"
         onChange={(e) => setSearchAddress(e.target.value)}
-        onBlur={() => setAddress(searchAddress)}
         tabIndex={0}
         inputIcon={
           <button className="submitButton" type="submit">

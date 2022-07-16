@@ -62,7 +62,7 @@ function FoodList() {
                 <FoodTruck truck={truck} />
               </button>
             ))}
-            {!trucks?.length && <h2 className="mt-0">No Food Trucks Found</h2>}
+            {!trucks?.length && <h2>No Food Trucks Found</h2>}
           </>
         </div>
       </PoseContainer>
