@@ -62,7 +62,7 @@ const TruckContextProvider = ({ children }: { children: React.ReactNode }) => {
   const [loaded, setLoaded] = useState(false);
 
   const [address, setAddressState] = useState(
-    localStorage.getItem('address') || '353 sacramento st',
+    localStorage.getItem('address') || '',
   );
   const [searchAddress, setSearchAddress] = useState(address);
 

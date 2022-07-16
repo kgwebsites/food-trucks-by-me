@@ -1,6 +1,5 @@
-import React, { useContext } from 'react';
+import React from 'react';
 import styled from 'styled-components';
-import { TruckContext } from '../../contexts/TruckContext';
 
 const StyledFoodTruck = styled.div`
   width: 100%;
@@ -20,8 +19,7 @@ const StyledFoodTruck = styled.div`
   }
 `;
 
-const FoodTruck = ({ address = '', truck }) => {
-  const { setSearchAddress } = useContext(TruckContext);
+const FoodTruck = ({ truck }) => {
   return (
     <StyledFoodTruck className="FoodTruck">
       <small>

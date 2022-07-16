@@ -38,7 +38,6 @@ function getNormalizedTruckId(truck: Truck) {
 function FoodMap() {
   const {
     trucks,
-    address,
     searchAddress,
     setSearchAddress,
     geolocation,
@@ -108,7 +107,7 @@ function FoodMap() {
                           lng: parseFloat(truck.longitude),
                         }}
                       >
-                        <FoodTruck truck={truck} address={address} />
+                        <FoodTruck truck={truck} />
                       </InfoWindow>
                     )}
                   </Marker>

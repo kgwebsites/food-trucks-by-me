@@ -36,7 +36,7 @@ const PoseContainer = posed.div({
 });
 
 function FoodList() {
-  const { loaded, trucks, address, error, searchAddress, setSearchAddress } =
+  const { loaded, trucks, error, searchAddress, setSearchAddress } =
     useContext(TruckContext);
 
   if (error || !loaded) return null;
@@ -59,7 +59,7 @@ function FoodList() {
                   .map((val) => JSON.stringify(val))
                   .join('-')}
               >
-                <FoodTruck truck={truck} address={address} />
+                <FoodTruck truck={truck} />
               </button>
             ))}
             {!trucks?.length && <h2 className="mt-0">No Food Trucks Found</h2>}

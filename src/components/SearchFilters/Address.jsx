@@ -21,7 +21,7 @@ function Address({ className }) {
       <Input
         type="text"
         value={searchAddress || address}
-        placeholder="353 Sacramento St"
+        placeholder="415 Mission St"
         onChange={(e) => setSearchAddress(e.target.value)}
         onBlur={() => setAddress(searchAddress)}
         tabIndex={0}
