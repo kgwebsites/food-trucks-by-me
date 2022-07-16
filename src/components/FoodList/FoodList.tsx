@@ -36,10 +36,10 @@ const PoseContainer = posed.div({
 });
 
 function FoodList() {
-  const { trucks, address, error, searchAddress, setSearchAddress } =
+  const { loaded, trucks, address, error, searchAddress, setSearchAddress } =
     useContext(TruckContext);
 
-  if (error) return null;
+  if (error || !loaded) return null;
 
   return (
     <StyledFoodList>
