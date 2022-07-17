@@ -56,6 +56,61 @@ interface TruckContextType {
 
 export const TruckContext = React.createContext<TruckContextType>({});
 
+interface FoodTrucksDataProps {
+  address: string;
+  coor?: Coordinates;
+  range: number;
+  day: string;
+  openNow: boolean;
+}
+
+const getFoodTrucksPromise = ({
+  address,
+  coor,
+  range,
+  day,
+  openNow,
+}: FoodTrucksDataProps) =>
+  new Promise(async (res) => {
+    const resp = await fetch(`${window.API_ROOT}/get_food_trucks`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+        address,
+        coor: coor
+          ? { latitude: coor?.latitude, longitude: coor?.longitude }
+          : undefined,
+        range,
+        day,
+        openNow,
+        currentHour: new Date().toLocaleTimeString([], {
+          hour: 'numeric',
+          hour12: false,
+        }),
+      }),
+    });
+    const data = await resp.json();
+    res(data);
+  });
+
+const getAddressFromCoorPromise = (coor: Coordinates) =>
+  new Promise(async (res) => {
+    const resp = await fetch(`${window.API_ROOT}/get_address_from_coor`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+        lng: coor.longitude,
+        lat: coor.latitude,
+      }),
+    });
+    const data = await resp.json();
+    res(data);
+  });
+
 const TruckContextProvider = ({ children }: { children: React.ReactNode }) => {
   let preventDuplicateFetch = useRef(false);
   let initialLoad = useRef(localStorage.getItem('initialLoad') || 'true');
@@ -131,51 +186,11 @@ const TruckContextProvider = ({ children }: { children: React.ReactNode }) => {
       setLoaded(false);
       const dataPromises = [];
       dataPromises.push(
-        new Promise(async (res) => {
-          const resp = await fetch(`${window.API_ROOT}/get_food_trucks`, {
-            method: 'POST',
-            headers: {
-              'Content-Type': 'application/json',
-            },
-            body: JSON.stringify({
-              address,
-              coor: coor
-                ? { latitude: coor?.latitude, longitude: coor?.longitude }
-                : undefined,
-              range,
-              day,
-              openNow,
-              currentHour: new Date().toLocaleTimeString([], {
-                hour: 'numeric',
-                hour12: false,
-              }),
-            }),
-          });
-          const data = await resp.json();
-          res(data);
-        }),
+        getFoodTrucksPromise({ address, coor, day, openNow, range }),
       );
 
       if (coor) {
-        dataPromises.push(
-          new Promise(async (res) => {
-            const resp = await fetch(
-              `${window.API_ROOT}/get_address_from_coor`,
-              {
-                method: 'POST',
-                headers: {
-                  'Content-Type': 'application/json',
-                },
-                body: JSON.stringify({
-                  lng: coor.longitude,
-                  lat: coor.latitude,
-                }),
-              },
-            );
-            const data = await resp.json();
-            res(data);
-          }),
-        );
+        dataPromises.push(getAddressFromCoorPromise(coor));
       }
       try {
         const allData: any = await Promise.all(dataPromises);
