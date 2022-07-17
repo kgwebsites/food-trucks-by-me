@@ -188,7 +188,10 @@ const TruckContextProvider = ({ children }: { children: React.ReactNode }) => {
         }
         setTrucks(data.trucks);
         setTrucksRaw(data.trucks);
-        setGeolocation({ longitude: data.lng, latitude: data.lat });
+        setGeolocation({
+          longitude: coor ? coor.longitude : data.lng,
+          latitude: coor ? coor.latitude : data.lat,
+        });
         setLoaded(true);
       } catch (e) {
         setError(e as string);
@@ -199,9 +202,14 @@ const TruckContextProvider = ({ children }: { children: React.ReactNode }) => {
 
   useEffect(() => {
     if ('geolocation' in navigator && initialLoad.current === 'true') {
-      navigator.geolocation.getCurrentPosition(async function (position) {
-        getFoodTrucks(position.coords);
-      });
+      navigator.geolocation.getCurrentPosition(
+        async function (position) {
+          getFoodTrucks(position.coords);
+        },
+        (error) => {
+          setError(error.message);
+        },
+      );
     } else getFoodTrucks();
     setInitialLoad();
   }, [getFoodTrucks]);
