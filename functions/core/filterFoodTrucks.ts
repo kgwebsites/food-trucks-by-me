@@ -1,6 +1,22 @@
 const fetch = require('node-fetch');
 
-function filterFoodTrucks({ lng, lat, range, day, openNow, currentHour }) {
+interface FilterFoodTrucksProps {
+  lng: number;
+  lat: number;
+  range: number;
+  day: string;
+  openNow: boolean;
+  currentHour: number;
+}
+
+export function filterFoodTrucks({
+  lng,
+  lat,
+  range,
+  day,
+  openNow,
+  currentHour,
+}: FilterFoodTrucksProps) {
   const latDeg = 69.172;
   const degToRad = 0.0174533;
 
@@ -34,9 +50,7 @@ function filterFoodTrucks({ lng, lat, range, day, openNow, currentHour }) {
     fetch(url, {
       headers: { 'X-App-Token': REACT_APP_SFGOV_TOKEN! },
     })
-      .then((data) => data.json().then((response) => res(response)))
-      .catch((err) => rej(err));
+      .then((data: Response) => data.json().then((response) => res(response)))
+      .catch((err: Error) => rej(err));
   });
 }
-
-module.exports = filterFoodTrucks;
