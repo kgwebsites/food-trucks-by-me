@@ -1,4 +1,4 @@
-const fetch = require('node-fetch');
+import fetch from 'node-fetch';
 
 interface FilterFoodTrucksProps {
   lng: number;
@@ -50,7 +50,7 @@ export function filterFoodTrucks({
     fetch(url, {
       headers: { 'X-App-Token': REACT_APP_SFGOV_TOKEN! },
     })
-      .then((data: Response) => data.json().then((response) => res(response)))
+      .then((data) => data.json().then((response) => res(response)))
       .catch((err: Error) => rej(err));
   });
 }

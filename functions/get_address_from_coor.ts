@@ -1,6 +1,6 @@
 import { Handler } from '@netlify/functions';
 
-const fetchAddress = require('./core/fetchAddress');
+import { fetchAddress } from './core/fetchAddress';
 
 export const handler: Handler = async (event) => {
   const { lat, lng } = JSON.parse(event.body!);

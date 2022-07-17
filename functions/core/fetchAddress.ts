@@ -1,4 +1,4 @@
-const fetch = require('node-fetch');
+import fetch from 'node-fetch';
 
 const { REACT_APP_GOOGLE_MAP_TOKEN } = process.env;
 
@@ -6,7 +6,7 @@ export function fetchAddress(lat: number, lng: number) {
   return new Promise((res, rej) => {
     const mapsUrl = `https://maps.googleapis.com/maps/api/geocode/json?latlng=${lat},${lng}&key=${REACT_APP_GOOGLE_MAP_TOKEN}`;
     fetch(mapsUrl)
-      .then((resp: Response) => {
+      .then((resp) => {
         resp.json().then((data) => {
           if (
             data.status === 'OK' &&

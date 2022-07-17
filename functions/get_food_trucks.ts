@@ -1,7 +1,7 @@
 import { Handler } from '@netlify/functions';
 
-const fetchLongLat = require('./core/fetchLongLat');
-const filterFoodTrucks = require('./core/filterFoodTrucks');
+import { fetchLongLat } from './core/fetchLongLat';
+import { filterFoodTrucks } from './core/filterFoodTrucks';
 
 export const handler: Handler = async (event) => {
   const { address, coor, range, day, openNow, currentHour } = JSON.parse(
@@ -30,7 +30,6 @@ export const handler: Handler = async (event) => {
           body: JSON.stringify({ trucks: response, lng, lat }),
         };
       } catch (err) {
-        console.log(err);
         throw new Error('Something went wrong, try again later');
       }
     } else {
