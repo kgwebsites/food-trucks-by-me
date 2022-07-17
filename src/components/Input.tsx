@@ -1,4 +1,4 @@
-import React, { ReactNode } from 'react';
+import React, { InputHTMLAttributes, ReactNode } from 'react';
 import styled from 'styled-components';
 
 const StyledInput = styled.label<IconProps>`
@@ -36,11 +36,17 @@ interface IconProps {
   postIcon?: ReactNode;
 }
 
-const Input = ({ preIcon, postIcon, ...rest }: IconProps) => (
+const Input = ({
+  preIcon,
+  postIcon,
+  ...rest
+}: IconProps & InputHTMLAttributes<HTMLInputElement>) => (
   <StyledInput postIcon={!!postIcon} preIcon={!!preIcon}>
-    {preIcon && <div className="preIcon">{preIcon}</div>}
-    <input {...rest} />
-    {postIcon && <div className="postIcon">{postIcon}</div>}
+    <>
+      {preIcon && <div className="preIcon">{preIcon}</div>}
+      <input {...rest} />
+      {postIcon && <div className="postIcon">{postIcon}</div>}
+    </>
   </StyledInput>
 );
 

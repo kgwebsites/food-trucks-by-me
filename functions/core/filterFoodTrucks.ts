@@ -32,7 +32,7 @@ function filterFoodTrucks({ lng, lat, range, day, openNow, currentHour }) {
 
   return new Promise((res, rej) => {
     fetch(url, {
-      headers: { 'X-App-Token': REACT_APP_SFGOV_TOKEN },
+      headers: { 'X-App-Token': REACT_APP_SFGOV_TOKEN! },
     })
       .then((data) => data.json().then((response) => res(response)))
       .catch((err) => rej(err));

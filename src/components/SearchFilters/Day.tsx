@@ -1,7 +1,7 @@
 import React, { useContext } from 'react';
 import styled from 'styled-components';
 import Select from 'react-select';
-import { TruckContext } from '../../contexts/TruckContext';
+import { TruckContext, WeekDay } from '../../contexts/TruckContext';
 
 const StyledDay = styled.div`
   input {
@@ -19,7 +19,7 @@ const days = [
   { value: 'Sunday', label: 'Sunday' },
 ];
 
-function Day({ className }) {
+function Day({ className }: { className?: string }) {
   const { day, setDay } = useContext(TruckContext);
   return (
     <StyledDay className={className}>
@@ -27,7 +27,7 @@ function Day({ className }) {
         Day
         <Select
           value={days.find((d) => d.value === day)}
-          onChange={(newDay) => setDay(newDay.value)}
+          onChange={(newDay) => setDay && setDay(newDay?.value as WeekDay)}
           options={days}
         />
       </label>

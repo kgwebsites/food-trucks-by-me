@@ -1,9 +1,11 @@
+import { Handler } from '@netlify/functions';
+
 const fetchLongLat = require('./core/fetchLongLat');
 const filterFoodTrucks = require('./core/filterFoodTrucks');
 
-exports.handler = async function (event, context, callback) {
+export const handler: Handler = async (event) => {
   const { address, coor, range, day, openNow, currentHour } = JSON.parse(
-    event.body,
+    event.body!,
   );
   try {
     let lat, lng;
@@ -23,10 +25,10 @@ exports.handler = async function (event, context, callback) {
         currentHour,
       });
       try {
-        callback(null, {
+        return {
           statusCode: 200,
           body: JSON.stringify({ trucks: response, lng, lat }),
-        });
+        };
       } catch (err) {
         console.log(err);
         throw new Error('Something went wrong, try again later');
@@ -35,6 +37,9 @@ exports.handler = async function (event, context, callback) {
       throw new Error('Invalid address');
     }
   } catch (err) {
-    callback(err);
+    return {
+      statusCode: 500,
+      body: JSON.stringify(err),
+    };
   }
 };

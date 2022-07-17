@@ -6,7 +6,7 @@ import Radius from './Radius';
 import Day from './Day';
 import OpenNow from './OpenNow';
 
-const StyledSearchFilters = styled.div`
+const StyledSearchFilters = styled.div<{ trucksLoaded?: number }>`
   .searchFilters {
     display: flex;
     align-items: center;
@@ -35,14 +35,14 @@ const StyledSearchFilters = styled.div`
 function SearchFilters() {
   const { trucks, resultFilters, setResultFilters } = useContext(TruckContext);
 
-  function removeResultFilter(oldFilterType) {
-    const newResultFilters = {};
+  function removeResultFilter(oldFilterType: string) {
+    const newResultFilters: { [key: string]: any } = {};
     Object.entries(resultFilters).forEach(([filterType, filter]) => {
       if (filterType !== oldFilterType) {
         newResultFilters[filterType] = filter;
       }
     });
-    setResultFilters(newResultFilters);
+    setResultFilters && setResultFilters(newResultFilters);
   }
 
   return (

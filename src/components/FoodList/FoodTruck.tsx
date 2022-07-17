@@ -1,5 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
+import { Truck } from '../../contexts/TruckContext';
 
 const StyledFoodTruck = styled.div`
   width: 100%;
@@ -19,7 +20,7 @@ const StyledFoodTruck = styled.div`
   }
 `;
 
-const FoodTruck = ({ truck }) => {
+const FoodTruck = ({ truck }: { truck: Truck }) => {
   return (
     <StyledFoodTruck className="FoodTruck">
       <small>

@@ -15,7 +15,7 @@ const StyledAddress = styled.div`
   }
 `;
 
-function Address({ className }) {
+function Address({ className }: { className?: string }) {
   const { searchAddress, setSearchAddress, getFoodTrucks, setError } =
     useContext(TruckContext);
   return (
@@ -24,7 +24,10 @@ function Address({ className }) {
         type="text"
         value={searchAddress}
         placeholder="415 Mission St, San Francisco"
-        onChange={(e) => setSearchAddress(e.target.value)}
+        onChange={(e) =>
+          setSearchAddress &&
+          setSearchAddress((e.target as HTMLInputElement).value)
+        }
         tabIndex={0}
         postIcon={
           <button className="submitButton" type="submit">
@@ -38,10 +41,10 @@ function Address({ className }) {
             onClick={() => {
               navigator.geolocation.getCurrentPosition(
                 ({ coords }) => {
-                  getFoodTrucks(coords);
+                  getFoodTrucks && getFoodTrucks(coords);
                 },
                 (error) => {
-                  setError(error.message);
+                  setError && setError(error.message);
                 },
               );
             }}

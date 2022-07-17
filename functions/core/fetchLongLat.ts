@@ -1,11 +1,11 @@
 const fetch = require('node-fetch');
 const { REACT_APP_GOOGLE_MAP_TOKEN } = process.env;
 
-function fetchLongLat(address) {
+export function fetchLongLat(address: string) {
   return new Promise((res, rej) => {
     const mapsUrl = `https://maps.googleapis.com/maps/api/geocode/json?address=${address}&key=${REACT_APP_GOOGLE_MAP_TOKEN}`;
     try {
-      fetch(mapsUrl).then((resp) => {
+      fetch(mapsUrl).then((resp: Response) => {
         resp.json().then((data) => {
           if (
             data.status === 'OK' &&
@@ -25,5 +25,3 @@ function fetchLongLat(address) {
     }
   });
 }
-
-module.exports = fetchLongLat;

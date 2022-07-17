@@ -12,7 +12,7 @@ const week = [
   'Saturday',
 ];
 
-type WeekDay =
+export type WeekDay =
   | 'Sunday'
   | 'Monday'
   | 'Tuesday'
@@ -32,10 +32,14 @@ export interface Truck {
   latitude: string;
   longitude: string;
   location: string;
+  applicant: string;
+  starttime: string;
+  endtime: string;
 }
 
 interface TruckContextType {
   error?: string;
+  setError?: (error: string) => void;
   loaded?: boolean;
   address?: string;
   setAddress?: (address: string) => void;
@@ -47,14 +51,16 @@ interface TruckContextType {
   setDay?: (day: WeekDay) => void;
   openNow?: boolean;
   setOpenNow?: (openNow: boolean) => void;
-  resultFilters?: ResultFilters;
+  resultFilters: ResultFilters;
   setResultFilters?: (resultFilter: ResultFilters) => void;
   getFoodTrucks?: (coor?: Coordinates) => Promise<void>;
   trucks?: Truck[];
   geolocation?: Coordinates;
 }
 
-export const TruckContext = React.createContext<TruckContextType>({});
+export const TruckContext = React.createContext<TruckContextType>({
+  resultFilters: {},
+});
 
 interface FoodTrucksDataProps {
   address: string;
@@ -233,6 +239,7 @@ const TruckContextProvider = ({ children }: { children: React.ReactNode }) => {
     <TruckContext.Provider
       value={{
         error,
+        setError,
         loaded,
         address,
         setAddress,

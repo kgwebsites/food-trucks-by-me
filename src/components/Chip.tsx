@@ -1,6 +1,6 @@
-import React from 'react';
+import React, { MouseEventHandler, ReactNode } from 'react';
 import styled from 'styled-components';
-import Button from './Button';
+import Button, { ButtonStyle } from './Button';
 import { ReactComponent as Close } from '../assets/close.svg';
 
 const StyledChip = styled.li`
@@ -24,13 +24,23 @@ const StyledChip = styled.li`
   }
 `;
 
-function Chip({ children, onClose }) {
+function Chip({
+  children,
+  onClose,
+}: {
+  children: ReactNode;
+  onClose: MouseEventHandler<HTMLButtonElement>;
+}) {
   return (
     <StyledChip>
       <div>{children}</div>
       <div>
         {onClose && (
-          <Button className="chipClose" type="noStyle" onClick={onClose}>
+          <Button
+            className="chipClose"
+            type={ButtonStyle.noStyle}
+            onClick={onClose}
+          >
             <Close />
           </Button>
         )}

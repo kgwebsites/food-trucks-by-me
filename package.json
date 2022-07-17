@@ -14,6 +14,7 @@
     "url": "https://github.com/kgwebsites/food-trucks-by-me/issues"
   },
   "dependencies": {
+    "@netlify/functions": "^1.0.0",
     "@wojtekmaj/react-timerange-picker": "^2.1.0",
     "http-proxy-middleware": "^0.19.1",
     "node-fetch": "^2.6.0",

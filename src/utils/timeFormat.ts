@@ -1,4 +1,4 @@
-export default function timeFormat(timeString) {
+export default function timeFormat(timeString: string) {
   // timestring example: "13:00"
   const timeArr = timeString.split(':');
   const hours = parseInt(timeArr[0]);
