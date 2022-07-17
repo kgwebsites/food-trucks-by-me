@@ -1,8 +1,10 @@
-import { Handler } from '@netlify/functions';
+import { HandlerEvent, HandlerResponse } from '@netlify/functions';
 
 import { fetchAddress } from './core/fetchAddress';
 
-export const handler: Handler = async (event) => {
+export const handler = async (event: {
+  body: string;
+}): Promise<HandlerResponse> => {
   const { lat, lng } = JSON.parse(event.body!);
   try {
     const address = await fetchAddress(lat, lng);

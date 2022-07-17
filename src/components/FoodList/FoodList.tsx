@@ -12,7 +12,7 @@ const StyledFoodList = styled.div`
     flex-direction: column;
     align-items: flex-start;
     justify-content: center;
-    padding: 0 var(--gutter);
+    padding: 0 var(--gutter) var(--gutter-2) var(--gutter);
     max-width: 800px;
     margin: auto;
     position: relative;

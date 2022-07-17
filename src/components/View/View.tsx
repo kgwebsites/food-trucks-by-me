@@ -5,7 +5,7 @@ import FoodList from '../FoodList/FoodList';
 import FoodMap from '../FoodMap/FoodMap';
 
 const StyledView = styled.div`
-  height: 100%;
+  height: calc(100% - 106px);
   .fade {
     opacity: 0;
   }

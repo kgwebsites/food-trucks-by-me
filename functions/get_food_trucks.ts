@@ -1,9 +1,11 @@
-import { Handler } from '@netlify/functions';
+import { HandlerEvent, HandlerResponse } from '@netlify/functions';
 
 import { fetchLongLat } from './core/fetchLongLat';
 import { filterFoodTrucks } from './core/filterFoodTrucks';
 
-export const handler: Handler = async (event) => {
+export const handler = async (event: {
+  body: string;
+}): Promise<HandlerResponse> => {
   const { address, coor, range, day, openNow, currentHour } = JSON.parse(
     event.body!,
   );
