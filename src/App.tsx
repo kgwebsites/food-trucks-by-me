@@ -1,7 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
 import { CookiesProvider } from 'react-cookie';
-import Header from './components/Header/Header';
 import Footer from './components/Footer';
 import View from './components/View/View';
 import TruckContextProvider from './contexts/TruckContext';
@@ -26,7 +25,6 @@ function App() {
     <StyledApp className="App">
       <CookiesProvider>
         <TruckContextProvider>
-          <Header />
           <View />
           <Error />
         </TruckContextProvider>

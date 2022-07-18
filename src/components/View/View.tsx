@@ -1,8 +1,8 @@
 import React from 'react';
-import posed, { PoseGroup } from 'react-pose';
 import styled from 'styled-components';
-import FoodList from '../FoodList/FoodList';
-import FoodMap from '../FoodMap/FoodMap';
+import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
+import SanFrancisco from '../../pages/SanFrancisco';
+import Splash from '../../pages/Splash';
 
 const StyledView = styled.div`
   height: 100%;
@@ -28,20 +28,15 @@ const StyledView = styled.div`
   }
 `;
 
-const ViewContainer = posed.div({
-  enter: { opacity: 1, delay: 300, beforeChildren: true },
-  exit: { opacity: 0 },
-});
-
 function View() {
   return (
     <StyledView>
-      <PoseGroup>
-        <ViewContainer key="routes">
-          <FoodMap />
-          <FoodList />
-        </ViewContainer>
-      </PoseGroup>
+      <Router>
+        <Routes>
+          <Route path="/san-francisco" element={<SanFrancisco />} />
+          <Route path="/" element={<Splash />} />
+        </Routes>
+      </Router>
     </StyledView>
   );
 }
