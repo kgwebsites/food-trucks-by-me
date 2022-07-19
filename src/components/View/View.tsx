@@ -3,9 +3,13 @@ import styled from 'styled-components';
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 import SanFrancisco from '../../pages/SanFrancisco';
 import Splash from '../../pages/Splash';
+import TruckContextProvider from '../../contexts/TruckContext';
+import Error from '../Error';
 
 const StyledView = styled.div`
   height: 100%;
+  display: flex;
+  flex-direction: column;
   .fade {
     opacity: 0;
   }
@@ -33,7 +37,15 @@ function View() {
     <StyledView>
       <Router>
         <Routes>
-          <Route path="/san-francisco" element={<SanFrancisco />} />
+          <Route
+            path="/san-francisco"
+            element={
+              <TruckContextProvider city="San Francisco">
+                <SanFrancisco />
+                <Error />
+              </TruckContextProvider>
+            }
+          />
           <Route path="/" element={<Splash />} />
         </Routes>
       </Router>

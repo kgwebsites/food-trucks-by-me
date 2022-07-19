@@ -3,8 +3,6 @@ import styled from 'styled-components';
 import { CookiesProvider } from 'react-cookie';
 import Footer from './components/Footer';
 import View from './components/View/View';
-import TruckContextProvider from './contexts/TruckContext';
-import Error from './components/Error';
 
 const StyledApp = styled.main`
   height: 100vh;
@@ -24,10 +22,7 @@ function App() {
   return (
     <StyledApp className="App">
       <CookiesProvider>
-        <TruckContextProvider>
-          <View />
-          <Error />
-        </TruckContextProvider>
+        <View />
         <Footer />
       </CookiesProvider>
     </StyledApp>
