@@ -15,7 +15,7 @@ const StyledFooter = styled.footer`
   right: 0;
   padding: var(--gutter);
   svg {
-    background: white;
+    color: var(--text);
   }
   .flexRight {
     display: flex;

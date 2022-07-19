@@ -7,16 +7,21 @@ const StyledFoodTruck = styled.div`
   padding: var(--gutter-2) 0;
   .foodTruckLocation {
     text-decoration: none;
-    color: var(--blue);
+    color: var(--primary);
     margin-top: 0;
     margin-bottom: 8px;
+  }
+  small {
+    color: var(--text);
   }
   .title {
     margin-top: 0;
     margin-bottom: 0;
+    color: var(--text);
   }
   .foodTruckDescription {
     margin-bottom: 0;
+    color: var(--text);
   }
 `;
 

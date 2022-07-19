@@ -8,8 +8,9 @@ const StyledInput = styled.label<IconProps>`
       ${({ postIcon }) => (postIcon ? '40px' : 'var(--gutter)')} var(--gutter)
       ${({ preIcon }) => (preIcon ? '40px' : 'var(--gutter)')};
     box-sizing: border-box;
-    border: 1px solid var(--grey);
-    background-color: #f1f1f1;
+    border: 1px solid var(--secondary);
+    background-color: var(--accent);
+    color: var(--text);
     font-size: 16px;
   }
   .preIcon {

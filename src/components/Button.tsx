@@ -23,17 +23,17 @@ const StyledButton = styled.button<StyledButtonProps>`
       `;
       case ButtonStyle.solid:
         return `
-        border: 1px solid var(--blue);
-        background: var(--blue);
+        border: 1px solid var(--primary);
+        background: var(--primary);
         padding: var(--gutter);
         color: white;
       `;
       case ButtonStyle.button:
         return `
-        border: 1px solid var(--blue);
+        border: 1px solid var(--primary);
         background: transparent;
         padding: var(--gutter);
-        color: var(--blue);
+        color: var(--primary);
       `;
     }
   }}

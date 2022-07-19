@@ -23,11 +23,11 @@ const StyledFoodList = styled.div`
     text-align: left;
     width: 100%;
     &.active {
-      border: 1px solid var(--blue);
+      border: 1px solid var(--primary);
     }
   }
   .FoodTruck {
-    border-bottom: 1px solid var(--greyLight);
+    border-bottom: 1px solid var(--accent);
   }
 `;
 

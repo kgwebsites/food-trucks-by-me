@@ -12,14 +12,14 @@ const StyledResultFilter = styled.div`
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    box-shadow: 1px 3px 3px 2px var(--greyLight);
+    box-shadow: 1px 3px 3px 2px var(--accent);
     color: black;
     text-decoration: none;
     margin-bottom: var(--gutter-2);
     padding: var(--gutter);
     transition: box-shadow ease-in-out 0.25s;
     &:hover {
-      box-shadow: 1px 1px 1px 2px var(--greyLight);
+      box-shadow: 1px 1px 1px 2px var(--accent);
     }
   }
 `;
