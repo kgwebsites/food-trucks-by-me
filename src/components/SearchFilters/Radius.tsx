@@ -16,7 +16,17 @@ const options: Option[] = [
   { value: 3, label: '3 Miles' },
 ];
 
-const StyledRadius = styled.div``;
+const StyledRadius = styled.div`
+  .css-26l3qy-menu,
+  .css-1s2u09g-control,
+  .css-1pahdxg-control {
+    background-color: var(--background);
+    color: var(--text);
+  }
+  .css-qc6sy-singleValue {
+    color: var(--text);
+  }
+`;
 
 interface RadiusProps {
   className?: string;

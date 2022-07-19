@@ -7,6 +7,15 @@ const StyledDay = styled.div`
   input {
     width: 100%;
   }
+  .css-26l3qy-menu,
+  .css-1s2u09g-control,
+  .css-1pahdxg-control {
+    background-color: var(--background);
+    color: var(--text);
+  }
+  .css-qc6sy-singleValue {
+    color: var(--text);
+  }
 `;
 
 const days = [

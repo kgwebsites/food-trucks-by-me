@@ -17,8 +17,8 @@ app.post('/get_food_trucks', async (req, res) => {
     body: JSON.stringify(req.body),
   });
   res.statusCode = response.statusCode;
-  if (response.statusCode == 500) res.json({ error: response.body });
-  else res.json(JSON.parse(response.body));
+  if (response.statusCode === 500) res.json({ error: response.body });
+  else res.json(JSON.parse(response.body || ''));
 });
 
 app.post('/get_address_from_coor', async (req, res) => {
@@ -26,8 +26,8 @@ app.post('/get_address_from_coor', async (req, res) => {
     body: JSON.stringify(req.body),
   });
   res.statusCode = response.statusCode;
-  if (response.statusCode == 500) res.json({ error: response.body });
-  else res.json(JSON.parse(response.body));
+  if (response.statusCode === 500) res.json({ error: response.body });
+  else res.json(JSON.parse(response.body || ''));
 });
 
 app.listen(port, () => console.log(`Example app listening on port ${port}!`));

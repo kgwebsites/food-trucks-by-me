@@ -21,6 +21,18 @@ const StyledFoodMap = styled.div`
     padding-top: 0;
     background-color: var(--background);
   }
+  .gm-style-iw-d {
+    overflow: auto !important;
+  }
+  .gm-style .gm-style-iw-t::after {
+    background: linear-gradient(
+        45deg,
+        var(--background) 50%,
+        rgba(255, 255, 255, 0) 51%,
+        rgba(255, 255, 255, 0) 100%
+      )
+      var(--background);
+  }
   .map-container {
     height: 300px;
     margin-bottom: var(--gutter-2);
