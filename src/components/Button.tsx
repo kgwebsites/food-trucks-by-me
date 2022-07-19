@@ -19,6 +19,7 @@ const StyledButton = styled.button<StyledButtonProps>`
         border: none;
         background: transparent;
         padding: 0;
+        color: black;
       `;
       case ButtonStyle.solid:
         return `
