@@ -24,12 +24,6 @@ const StyledView = styled.div`
     opacity: 0;
     transition: opacity 200ms;
   }
-  /* <PoseGroup /> container element */
-  > div {
-    display: flex;
-    flex-direction: column;
-    height: 100%;
-  }
 `;
 
 function View() {

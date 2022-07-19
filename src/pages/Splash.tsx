@@ -2,6 +2,7 @@ import styled from 'styled-components';
 import Button, { ButtonStyle } from '../components/Button';
 import { ReactComponent as FoodTruckIcon } from '../assets/food-truck-raw.svg';
 import { ReactComponent as GoldenGateBridgeIcon } from '../assets/golden-gate-bridge.svg';
+import Meta from '../components/Meta';
 
 const StyledSplash = styled.main`
   padding: var(--gutter);
@@ -22,6 +23,7 @@ const StyledSplash = styled.main`
 
 const Splash = () => (
   <StyledSplash>
+    <Meta includeH1={false} />
     <div className="splashHeader">
       <FoodTruckIcon />
       <h1>Food Trucks by me</h1>

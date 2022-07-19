@@ -30,7 +30,7 @@ function Address({ className }: { className?: string }) {
         }
         tabIndex={0}
         postIcon={
-          <button className="submitButton" type="submit">
+          <button className="submitButton" type="submit" aria-label="Search">
             <FoodTruckIcon />
           </button>
         }
@@ -38,6 +38,7 @@ function Address({ className }: { className?: string }) {
           <button
             className="useLocationButton"
             type="button"
+            aria-label="Use Location"
             onClick={() => {
               navigator.geolocation.getCurrentPosition(
                 ({ coords }) => {
