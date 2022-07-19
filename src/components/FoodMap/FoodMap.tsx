@@ -22,7 +22,7 @@ const StyledFoodMap = styled.div`
     background-color: var(--background);
   }
   .map-container {
-    height: 400px;
+    height: 300px;
     margin-bottom: var(--gutter-2);
   }
 `;
