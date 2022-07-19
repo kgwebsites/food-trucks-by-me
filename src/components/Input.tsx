@@ -10,6 +10,7 @@ const StyledInput = styled.label<IconProps>`
     box-sizing: border-box;
     border: 1px solid var(--grey);
     background-color: #f1f1f1;
+    font-size: 16px;
   }
   .preIcon {
     position: absolute;

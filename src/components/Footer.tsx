@@ -31,6 +31,7 @@ function Footer() {
         type={ButtonStyle.noStyle}
         // @ts-ignore
         onClick={() => settingsModal.current?.showModal()}
+        aria-label="Settings"
       >
         <Cog />
       </Button>
@@ -40,6 +41,7 @@ function Footer() {
             type={ButtonStyle.noStyle}
             // @ts-ignore
             onClick={() => settingsModal.current?.close()}
+            aria-label="Close Settings"
           >
             <Close />
           </Button>

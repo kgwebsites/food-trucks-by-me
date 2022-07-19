@@ -22,6 +22,7 @@ const StyledFoodMap = styled.div`
   }
   .map-container {
     height: 400px;
+    margin-bottom: var(--gutter-2);
   }
 `;
 
@@ -94,6 +95,7 @@ function FoodMap() {
                       lng: parseFloat(truck.longitude),
                     }}
                     icon={FoodTruckIcon}
+                    title={truck.applicant}
                     onClick={() => {
                       setOpenTruck(truckId);
                       setSearchAddress && setSearchAddress(truck.location);
