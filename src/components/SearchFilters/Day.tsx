@@ -10,13 +10,13 @@ const StyledDay = styled.div`
 `;
 
 const days = [
-  { value: 'Monday', label: 'Monday' },
-  { value: 'Tuesday', label: 'Tuesday' },
-  { value: 'Wednesday', label: 'Wednesday' },
-  { value: 'Thursday', label: 'Thursday' },
-  { value: 'Friday', label: 'Friday' },
-  { value: 'Saturday', label: 'Saturday' },
-  { value: 'Sunday', label: 'Sunday' },
+  { value: 'Monday', label: 'Mon' },
+  { value: 'Tuesday', label: 'Tues' },
+  { value: 'Wednesday', label: 'Wed' },
+  { value: 'Thursday', label: 'Thur' },
+  { value: 'Friday', label: 'Fri' },
+  { value: 'Saturday', label: 'Sat' },
+  { value: 'Sunday', label: 'Sun' },
 ];
 
 function Day({ className }: { className?: string }) {

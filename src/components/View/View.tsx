@@ -1,11 +1,15 @@
 import React from 'react';
-import posed, { PoseGroup } from 'react-pose';
 import styled from 'styled-components';
-import FoodList from '../FoodList/FoodList';
-import FoodMap from '../FoodMap/FoodMap';
+import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
+import SanFrancisco from '../../pages/SanFrancisco';
+import Splash from '../../pages/Splash';
+import TruckContextProvider from '../../contexts/TruckContext';
+import Error from '../Error';
 
 const StyledView = styled.div`
   height: 100%;
+  display: flex;
+  flex-direction: column;
   .fade {
     opacity: 0;
   }
@@ -20,28 +24,25 @@ const StyledView = styled.div`
     opacity: 0;
     transition: opacity 200ms;
   }
-  /* <PoseGroup /> container element */
-  > div {
-    display: flex;
-    flex-direction: column;
-    height: 100%;
-  }
 `;
-
-const ViewContainer = posed.div({
-  enter: { opacity: 1, delay: 300, beforeChildren: true },
-  exit: { opacity: 0 },
-});
 
 function View() {
   return (
     <StyledView>
-      <PoseGroup>
-        <ViewContainer key="routes">
-          <FoodMap />
-          <FoodList />
-        </ViewContainer>
-      </PoseGroup>
+      <Router>
+        <Routes>
+          <Route
+            path="/san-francisco"
+            element={
+              <TruckContextProvider city="San Francisco">
+                <SanFrancisco />
+                <Error />
+              </TruckContextProvider>
+            }
+          />
+          <Route path="/" element={<Splash />} />
+        </Routes>
+      </Router>
     </StyledView>
   );
 }

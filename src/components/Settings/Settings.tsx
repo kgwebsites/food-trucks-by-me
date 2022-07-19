@@ -76,6 +76,9 @@ function Settings() {
                 CC 3.0 BY
               </a>
             </li>
+            <li>
+              <a href="svgrepo.com">svgrepo.com</a>
+            </li>
           </ul>
         </div>
       </StyledSettings>

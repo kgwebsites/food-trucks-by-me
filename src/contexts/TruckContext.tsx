@@ -64,6 +64,7 @@ export const TruckContext = React.createContext<TruckContextType>({
 
 interface FoodTrucksDataProps {
   address: string;
+  city: string;
   coor?: Coordinates;
   range: number;
   day: string;
@@ -72,6 +73,7 @@ interface FoodTrucksDataProps {
 
 const getFoodTrucksPromise = ({
   address,
+  city,
   coor,
   range,
   day,
@@ -84,7 +86,7 @@ const getFoodTrucksPromise = ({
         'Content-Type': 'application/json',
       },
       body: JSON.stringify({
-        address,
+        address: `${address}, ${city}`,
         coor: coor
           ? { latitude: coor?.latitude, longitude: coor?.longitude }
           : undefined,
@@ -117,7 +119,13 @@ const getAddressFromCoorPromise = (coor: Coordinates) =>
     res(data);
   });
 
-const TruckContextProvider = ({ children }: { children: React.ReactNode }) => {
+const TruckContextProvider = ({
+  children,
+  city,
+}: {
+  children: React.ReactNode;
+  city: string;
+}) => {
   let preventDuplicateFetch = useRef(false);
   let initialLoad = useRef(localStorage.getItem('initialLoad') || 'true');
   const setInitialLoad = () => {
@@ -192,7 +200,7 @@ const TruckContextProvider = ({ children }: { children: React.ReactNode }) => {
       setLoaded(false);
       const dataPromises = [];
       dataPromises.push(
-        getFoodTrucksPromise({ address, coor, day, openNow, range }),
+        getFoodTrucksPromise({ address, city, coor, day, openNow, range }),
       );
 
       if (coor) {
@@ -218,7 +226,7 @@ const TruckContextProvider = ({ children }: { children: React.ReactNode }) => {
         setError(e as string);
       }
     },
-    [address, range, day, openNow],
+    [address, city, range, day, openNow],
   );
 
   useEffect(() => {

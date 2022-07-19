@@ -8,7 +8,7 @@ const StyledHeader = styled.form`
   padding: var(--gutter);
   width: 100%;
   max-width: 800px;
-  margin: auto;
+  margin: 0 auto;
   margin-bottom: var(--gutter-2);
   box-sizing: border-box;
   .searchRow {
