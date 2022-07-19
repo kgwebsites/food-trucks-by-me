@@ -6,6 +6,8 @@ const StyledModal = styled.dialog`
   height: 100%;
   width: 100%;
   padding: 8px;
+  background-color: var(--background);
+  color: var(--text);
   max-height: 100%;
   box-sizing: border-box;
   max-width: 100%;
