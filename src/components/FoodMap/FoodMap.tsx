@@ -19,6 +19,7 @@ const StyledFoodMap = styled.div`
     min-height: 40px;
     min-width: 105px !important;
     padding-top: 0;
+    background-color: var(--background);
   }
   .map-container {
     height: 400px;
