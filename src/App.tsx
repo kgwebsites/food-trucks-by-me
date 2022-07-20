@@ -6,6 +6,7 @@ import View from './components/View/View';
 
 const StyledApp = styled.main`
   height: 100vh;
+  height: -webkit-fill-available;
   overflow: hidden;
   display: flex;
   flex-direction: column;
