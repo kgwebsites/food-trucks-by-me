@@ -17,7 +17,7 @@ const StyledFoodMap = styled.div`
   // Food Truck InfoWindow on map
   .gm-style-iw.gm-style-iw-c {
     min-height: 40px;
-    min-width: 105px !important;
+    width: 250px;
     padding-top: 0;
     background-color: var(--background);
   }

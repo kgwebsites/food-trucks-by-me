@@ -42,6 +42,7 @@ interface TruckContextType {
   setError?: (error: string) => void;
   loaded?: boolean;
   address?: string;
+  city?: string;
   setAddress?: (address: string) => void;
   searchAddress?: string;
   setSearchAddress?: (searchAddress: string) => void;
@@ -250,6 +251,7 @@ const TruckContextProvider = ({
         setError,
         loaded,
         address,
+        city,
         setAddress,
         searchAddress,
         setSearchAddress,

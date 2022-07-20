@@ -1,6 +1,8 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import styled from 'styled-components';
-import { Truck } from '../../contexts/TruckContext';
+import { Truck, TruckContext } from '../../contexts/TruckContext';
+import { ReactComponent as AppleMapsIcon } from '../../assets/apple-maps.svg';
+import { ReactComponent as GoogleMapsIcon } from '../../assets/google-maps.svg';
 
 const StyledFoodTruck = styled.div`
   width: 100%;
@@ -20,12 +22,30 @@ const StyledFoodTruck = styled.div`
     color: var(--text);
   }
   .foodTruckDescription {
-    margin-bottom: 0;
+    margin-bottom: var(--gutter);
     color: var(--text);
+  }
+  .appleMaps {
+    svg {
+      width: 48px;
+      height: 48px;
+    }
+    @supports not (-webkit-touch-callout: none) {
+      /* CSS for other than iOS devices */
+      display: none;
+    }
+  }
+  .googleMaps {
+    svg {
+      width: 48px;
+      height: 48px;
+    }
   }
 `;
 
 const FoodTruck = ({ truck }: { truck: Truck }) => {
+  const { city } = useContext(TruckContext);
+
   return (
     <StyledFoodTruck className="FoodTruck">
       <small>
@@ -36,6 +56,18 @@ const FoodTruck = ({ truck }: { truck: Truck }) => {
         ({truck.starttime} - {truck.endtime})
       </small>
       <p className="foodTruckDescription">{truck.optionaltext}</p>
+      <a
+        className="appleMaps"
+        href={`http://maps.apple.com/daddr=${truck.location}+${city}`}
+      >
+        <AppleMapsIcon />
+      </a>
+      <a
+        className="googleMaps"
+        href={`https://www.google.com/maps/dir/?api=1&destination=${truck.location}+${city}`}
+      >
+        <GoogleMapsIcon />
+      </a>
     </StyledFoodTruck>
   );
 };
